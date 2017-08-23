@@ -11,6 +11,29 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>TODO write content</div>
+        <form action="ServletEstudiantes">
+            <table>
+                <tr>
+                    <td>Id:</td> 
+                    <td><input type="number" name="id" size="2" placeholder="Ingrese el id"/> </td>
+                </tr>
+
+                <tr>
+                    <td><input type="submit" id="submit" name="Buscar" value="Buscar"></td>
+                </tr>
+            </table>
+        </form>
+
+
+        <%
+        if (request.getAttribute("estudiante") != null) {
+        Estudiante e = request.getAttribute("estudiante")%>
+        <h1><%=(Integer) e.getId();%></h1> 
+        <h1><%=(String) e.getNombre();%></h1> 
+        <h1><%=(String) e.getApellido();%></h1>  
+        <% request.removeAttribute("Estudiante");%>
+        <%
+        }
+        %>
     </body>
 </html>
