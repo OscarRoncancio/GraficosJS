@@ -47,7 +47,7 @@ public class ServletUsuarios extends HttpServlet  {
         System.out.println("entroooooooooo");
         if (!usuario.equals("") && !contraseña.equals("")) {
             Usuario u = this.usu.buscar(usuario, contraseña);
-            if (usuario == null) {
+            if (u == null) {
                 out.println("<p>error al ingresar</p>");
             } else {
                 out.println("<p><a href=\"inicioadmin.jsp\">continuar</a></p>");
