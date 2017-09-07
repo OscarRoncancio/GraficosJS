@@ -9,17 +9,16 @@ package Modelo;
  *
  * @author willy
  */
-public class Estudiante {
+public class Curso {
+    
     private int id;
     private String nombre;
-    private String apellido;
-    private int curso;
+    private int profesor;
 
-    public Estudiante(int id, String nombre, String apellido, int curso) {
+    public Curso(int id, String nombre, int profesor) {
         this.id = id;
         this.nombre = nombre;
-        this.apellido = apellido;
-        this.curso = curso;
+        this.profesor = profesor;
     }
 
     public int getId() {
@@ -38,22 +37,13 @@ public class Estudiante {
         this.nombre = nombre;
     }
 
-    public String getApellido() {
-        return apellido;
+    public int getProfesor() {
+        return profesor;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setProfesor(int profesor) {
+        this.profesor = profesor;
     }
-
-    public int getCurso() {
-        return curso;
-    }
-
-    public void setCurso(int curso) {
-        this.curso = curso;
-    }
-    
     
     
 }

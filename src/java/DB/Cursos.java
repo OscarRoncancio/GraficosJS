@@ -5,38 +5,42 @@
  */
 package DB;
 
+import Modelo.Curso;
 import Modelo.Estudiante;
 import java.net.URISyntaxException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
  *
  * @author willy
  */
-public class Estudiantes {
+public class Cursos {
 
     PreparedStatement preparedStmt;
     Connection connection;
     String query;
 
-    public Estudiantes() throws URISyntaxException {
+    public Cursos() throws URISyntaxException {
         DbConnection c = new DbConnection();
         this.connection = c.getConnection();
     }
 
-    public boolean agregar(Estudiante a) {
+    public boolean agregar(Curso a) {
         boolean r = false;
         try {
             // the mysql insert statement
-            query = " insert into Estudiante (id,nombre,apellido,curso)"
-                    + " values (?, ?, ?, ?);";
+            query = " insert into Cursos (id,nombre,profesor)"
+                    + " values (?, ?, ?);";
             // create the mysql insert preparedstatement
             preparedStmt = connection.prepareStatement(query);
             preparedStmt.setInt(1, a.getId());
             preparedStmt.setString(2, a.getNombre().trim());
-            preparedStmt.setString(3, a.getApellido().trim());
-            preparedStmt.setInt(4, a.getCurso());
+            preparedStmt.setInt(3, a.getProfesor());
             // execute the preparedstatement
             preparedStmt.execute();
             System.out.println("You made it, the insertion is ok!");
@@ -49,9 +53,33 @@ public class Estudiantes {
         return r;
     }
 
-    public Estudiante buscar(int id) {
-        Estudiante e = null;
-        this.query = "select * from Estudiante where id = " + id;
+//    public Estudiante buscar(int id) {
+//        Estudiante e = null;
+//        this.query = "select * from Estudiante where id = " + id;
+//        try {
+//            // create the java statement
+//            Statement st = this.connection.createStatement();
+//            // execute the query, and get a java resultset
+//            ResultSet rs = st.executeQuery(this.query);
+//            // iterate through the java resultset
+//            while (rs.next()) {
+//                int id2 = rs.getInt("id");
+//                String nom = rs.getString("nombre");
+//                String apellido = rs.getString("apellido");
+//                 int curso = rs.getInt("curso");
+//                e = new Estudiante(id2, nom, apellido,curso);
+//            }
+//            st.close();
+//        } catch (SQLException ex) {
+//            // TODO Auto-generated catch block
+//            System.out.println("Failed to make update!");
+//            ex.printStackTrace();
+//        }
+//        return e;
+//    }
+    public ArrayList<Curso> GetCursos() {
+        ArrayList<Curso> cur = new ArrayList<>();
+        this.query = "select * from Cursos ";
         try {
             // create the java statement
             Statement st = this.connection.createStatement();
@@ -61,9 +89,9 @@ public class Estudiantes {
             while (rs.next()) {
                 int id2 = rs.getInt("id");
                 String nom = rs.getString("nombre");
-                String apellido = rs.getString("apellido");
-                 int curso = rs.getInt("curso");
-                e = new Estudiante(id2, nom, apellido,curso);
+                int profesor = rs.getInt("profesor");
+                Curso e = new Curso(id2, nom, profesor);
+                cur.add(e);
             }
             st.close();
         } catch (SQLException ex) {
@@ -71,38 +99,9 @@ public class Estudiantes {
             System.out.println("Failed to make update!");
             ex.printStackTrace();
         }
-        return e;
+        return cur;
     }
- 
-    public ArrayList<Estudiante> GetEstudiantes(){
-        ArrayList<Estudiante> est= new ArrayList<>();
-        this.query = "select * from Estudiante ";
-        try {
-            // create the java statement
-            Statement st = this.connection.createStatement();
-            // execute the query, and get a java resultset
-            ResultSet rs = st.executeQuery(this.query);
-            // iterate through the java resultset
-            while (rs.next()) {
-                int id2 = rs.getInt("id");
-                String nom = rs.getString("nombre");
-                String apellido = rs.getString("apellido");
-                 int curso = rs.getInt("curso");
-                Estudiante e = new Estudiante(id2, nom, apellido,curso);
-                est.add(e);
-            }
-            st.close();
-        } catch (SQLException ex) {
-            // TODO Auto-generated catch block
-            System.out.println("Failed to make update!");
-            ex.printStackTrace();
-        }
-        return est;
-    }
-    
-    
-    
-    
+
     public void disconect() throws SQLException {
         this.connection.close();
     }
@@ -114,5 +113,4 @@ public class Estudiantes {
     public Connection getConnection() {
         return connection;
     }
-
 }
