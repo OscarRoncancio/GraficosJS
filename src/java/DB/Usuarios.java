@@ -52,33 +52,10 @@ public class Usuarios {
 //        }
 //        return r;
 //    }
-//    public Estudiante buscar(int id) {
-//        Estudiante e = null;
-//        this.query = "select * from Estudiante where id = " + id;
-//        try {
-//            // create the java statement
-//            Statement st = this.connection.createStatement();
-//            // execute the query, and get a java resultset
-//            ResultSet rs = st.executeQuery(this.query);
-//            // iterate through the java resultset
-//            while (rs.next()) {
-//                int id2 = rs.getInt("id");
-//                String nom = rs.getString("nombre");
-//                String apellido = rs.getString("apellido");
-//                 int curso = rs.getInt("curso");
-//                e = new Estudiante(id2, nom, apellido,curso);
-//            }
-//            st.close();
-//        } catch (SQLException ex) {
-//            // TODO Auto-generated catch block
-//            System.out.println("Failed to make update!");
-//            ex.printStackTrace();
-//        }
-//        return e;
-//    }
+    
     public Usuario buscar(String usu,String cont) {
         Usuario e=null;
-        this.query = "select * from Usuario where usuario="+usu.trim();
+        this.query = "select * from Usuario where usuario = \""+usu.trim()+"\"";
         try {
             // create the java statement
             Statement st = this.connection.createStatement();

@@ -44,7 +44,6 @@ public class ServletUsuarios extends HttpServlet  {
         // Obtengo los datos de la peticion
         usuario = request.getParameter("usuario").trim();
         contraseña = request.getParameter("contraseña").trim();
-        System.out.println("entroooooooooo");
         if (!usuario.equals("") && !contraseña.equals("")) {
             Usuario u = this.usu.buscar(usuario, contraseña);
             if (u == null) {
