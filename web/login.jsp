@@ -33,7 +33,7 @@
 	<h2>Login</h2>
 	<form id="form1">
                 Usuario: <input type="text" id="usuario" /> <br>
-                Contraseña:<input type="password" id="contraseña" /> <br>
+                Contraseña:<input type="text" id="contraseña" /> <br>
                     <input type="button" id="submit" value="Ingresar" /> 
 	</form>
 	<br>

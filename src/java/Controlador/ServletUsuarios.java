@@ -14,6 +14,8 @@ import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,7 +23,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author willy
  */
-public class ServletUsuarios {
+@WebServlet(name = "ServletUsuarios", urlPatterns = {"/ServletUsuarios"})
+public class ServletUsuarios extends HttpServlet  {
 
     private static final long serialVersionUID = 1L;
     private Usuarios usu;
@@ -31,20 +34,7 @@ public class ServletUsuarios {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html; charset=iso-8859-1");
-        PrintWriter out = response.getWriter();
-        String usuario = "", contraseña = "";
-        // Obtengo los datos de la peticion
-        usuario = request.getParameter("usuario").trim();
-        contraseña = request.getParameter("contraseña").trim();
-        if (!usuario.equals("") && !contraseña.equals("")) {
-            Usuario u = this.usu.buscar(usuario, contraseña);
-            if (usuario == null) {
-                out.println("<p>error al ingresar</p>");
-            } else {
-                out.println("<p><a href=\"inicioadmin.jsp\">continuar</a></p>");
-            }
-        }
+   
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -54,12 +44,13 @@ public class ServletUsuarios {
         // Obtengo los datos de la peticion
         usuario = request.getParameter("usuario").trim();
         contraseña = request.getParameter("contraseña").trim();
+        System.out.println("entroooooooooo");
         if (!usuario.equals("") && !contraseña.equals("")) {
             Usuario u = this.usu.buscar(usuario, contraseña);
             if (usuario == null) {
                 out.println("<p>error al ingresar</p>");
             } else {
-                out.println("<p><a href=\"index.html\">continuar</a></p>");
+                out.println("<p><a href=\"inicioadmin.jsp\">continuar</a></p>");
             }
         }
     }
