@@ -5,36 +5,40 @@
  */
 package DB;
 
-import Modelo.Estudiante;
-import Modelo.Profesor;
+import Modelo.Curso;
 import java.net.URISyntaxException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  *
  * @author willy
  */
-public class Profesores {
-    private PreparedStatement preparedStmt;
+public class Admins {
+     private PreparedStatement preparedStmt;
     private Connection connection;
     private String query;
 
-    public Profesores() throws URISyntaxException {
+    public Admins() throws URISyntaxException {
         DbConnection c = new DbConnection();
         this.connection = c.getConnection();
     }
 
-//    public boolean agregar(Profesor a) {
+//    public boolean agregar(Curso a) {
 //        boolean r = false;
 //        try {
 //            // the mysql insert statement
-//            query = " insert into Estudiante (id,nombre,apellido)"
+//            query = " insert into Cursos (id,nombre,profesor)"
 //                    + " values (?, ?, ?);";
 //            // create the mysql insert preparedstatement
 //            preparedStmt = connection.prepareStatement(query);
-//            preparedStmt.setInt(1,a.getCedula());
+//            preparedStmt.setInt(1, a.getId());
 //            preparedStmt.setString(2, a.getNombre().trim());
-//            preparedStmt.setString(3, a.getApellido().trim());
+//            preparedStmt.setInt(3, a.getProfesor());
 //            // execute the preparedstatement
 //            preparedStmt.execute();
 //            System.out.println("You made it, the insertion is ok!");
@@ -46,11 +50,10 @@ public class Profesores {
 //        }
 //        return r;
 //    }
-    
-//    public Profesor buscar(int id) {
-//        Profesor e = null;
-//        boolean r = false;
-//         this.query = "select * from Profesor where cedula = " + id;
+
+//    public Estudiante buscar(int id) {
+//        Estudiante e = null;
+//        this.query = "select * from Estudiante where id = " + id;
 //        try {
 //            // create the java statement
 //            Statement st = this.connection.createStatement();
@@ -58,10 +61,11 @@ public class Profesores {
 //            ResultSet rs = st.executeQuery(this.query);
 //            // iterate through the java resultset
 //            while (rs.next()) {
-//                int id2 = rs.getInt("cedula");
+//                int id2 = rs.getInt("id");
 //                String nom = rs.getString("nombre");
 //                String apellido = rs.getString("apellido");
-//                e = new Profesor(id2, nom, apellido);
+//                 int curso = rs.getInt("curso");
+//                e = new Estudiante(id2, nom, apellido,curso);
 //            }
 //            st.close();
 //        } catch (SQLException ex) {
@@ -71,7 +75,32 @@ public class Profesores {
 //        }
 //        return e;
 //    }
-    
+//    public ArrayList<Curso> GetAdmins() {
+//        ArrayList<Curso> cur2 = new ArrayList<>();
+//        this.query = "select * from Cursos ";
+//        try {
+//            // create the java statement
+//            Statement st = this.connection.createStatement();
+//            // execute the query, and get a java resultset
+//            ResultSet rs = st.executeQuery(this.query);
+//            // iterate through the java resultset
+//            while (rs.next()) {
+//                int id2 = rs.getInt("id");
+//                String nom = rs.getString("nombre");
+//                int profesor = rs.getInt("profesor");
+//                Curso e = new Curso(id2, nom, profesor);
+//                cur2.add(e);
+//            }
+//            st.close();
+//            
+//        } catch (SQLException ex) {
+//            // TODO Auto-generated catch block
+//            System.out.println("Failed to make update!");
+//            ex.printStackTrace();
+//        }
+//        return cur2;
+//    }
+
     public void disconect() throws SQLException {
         this.connection.close();
     }
@@ -83,5 +112,4 @@ public class Profesores {
     public Connection getConnection() {
         return connection;
     }
-
 }

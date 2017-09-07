@@ -4,10 +4,10 @@ import java.net.URISyntaxException;
 import java.sql.*;
 
 public class DbConnection {
-   static String bd = "bd";
-   static String login = "root";
-   static String password = "root";
-   static String url = "jdbc:mysql://localhost/"+bd;
+   private static String bd = "bd";
+   private static String login = "root";
+   private static String password = "root";
+   private static String url = "jdbc:mysql://localhost/"+bd;
 
    Connection conn = null;
 

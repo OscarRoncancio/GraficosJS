@@ -16,9 +16,9 @@ import java.util.ArrayList;
  */
 public class Estudiantes {
 
-    PreparedStatement preparedStmt;
-    Connection connection;
-    String query;
+    private PreparedStatement preparedStmt;
+    private Connection connection;
+    private String query;
 
     public Estudiantes() throws URISyntaxException {
         DbConnection c = new DbConnection();

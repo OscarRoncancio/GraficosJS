@@ -32,19 +32,18 @@ public class ServletProfesores extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-     private Profesores profesores;
+    private Profesores profesores;
 
     public ServletProfesores() throws FileNotFoundException, URISyntaxException {
         this.profesores = new Profesores();
     }
 
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         int id=Integer.parseInt(request.getParameter("id"));
-         Profesor p = this.profesores.buscar(id);
-        request.setAttribute("profesor",p);
+        int id = Integer.parseInt(request.getParameter("id"));
+//          Profesor p = this.profesores.buscar(id);
+//         request.setAttribute("profesor",p);
         RequestDispatcher dispacher = request.getRequestDispatcher("NuevaPersona.jsp");
         dispacher.forward(request, response);
     }
@@ -63,16 +62,16 @@ public class ServletProfesores extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         if (request.getParameter("nombre").length() != 0) {
-            int cedula=Integer.parseInt(request.getParameter("cedula"));
+            int cedula = Integer.parseInt(request.getParameter("cedula"));
             String nombre = request.getParameter("nombre").trim();
             String apellido = request.getParameter("apellido").trim();
-            Profesor e = new Profesor(cedula,nombre, apellido);
-            boolean n = this.profesores.agregar(e);
-            if (n) {
-                request.setAttribute("Mensaje", "Se agrego correctamente ");
-            } else {
-                request.setAttribute("Mensaje", "id repetido intente nuevamente ");
-            }
+//            Profesor e = new Profesor(cedula,nombre, apellido);
+//            boolean n = this.profesores.agregar(e);
+//            if (n) {
+//                request.setAttribute("Mensaje", "Se agrego correctamente ");
+//            } else {
+//                request.setAttribute("Mensaje", "id repetido intente nuevamente ");
+//            }
         } else {
             request.setAttribute("Mensaje", "casillas incompletas intente nuevamente ");
         }

@@ -6,7 +6,7 @@
 package DB;
 
 import Modelo.Curso;
-import Modelo.Estudiante;
+import Modelo.Usuario;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,40 +19,39 @@ import java.util.ArrayList;
  *
  * @author willy
  */
-public class Cursos {
+public class Usuarios {
 
     private PreparedStatement preparedStmt;
     private Connection connection;
     private String query;
 
-    public Cursos() throws URISyntaxException {
+    public Usuarios() throws URISyntaxException {
         DbConnection c = new DbConnection();
         this.connection = c.getConnection();
     }
 
-    public boolean agregar(Curso a) {
-        boolean r = false;
-        try {
-            // the mysql insert statement
-            query = " insert into Cursos (id,nombre,profesor)"
-                    + " values (?, ?, ?);";
-            // create the mysql insert preparedstatement
-            preparedStmt = connection.prepareStatement(query);
-            preparedStmt.setInt(1, a.getId());
-            preparedStmt.setString(2, a.getNombre().trim());
-            preparedStmt.setInt(3, a.getProfesor());
-            // execute the preparedstatement
-            preparedStmt.execute();
-            System.out.println("You made it, the insertion is ok!");
-            r = true;
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            System.out.println("Failed to make insertion!");
-            e.printStackTrace();
-        }
-        return r;
-    }
-
+//    public boolean agregar(Curso a) {
+//        boolean r = false;
+//        try {
+//            // the mysql insert statement
+//            query = " insert into Cursos (id,nombre,profesor)"
+//                    + " values (?, ?, ?);";
+//            // create the mysql insert preparedstatement
+//            preparedStmt = connection.prepareStatement(query);
+//            preparedStmt.setInt(1, a.getId());
+//            preparedStmt.setString(2, a.getNombre().trim());
+//            preparedStmt.setInt(3, a.getProfesor());
+//            // execute the preparedstatement
+//            preparedStmt.execute();
+//            System.out.println("You made it, the insertion is ok!");
+//            r = true;
+//        } catch (SQLException e) {
+//            // TODO Auto-generated catch block
+//            System.out.println("Failed to make insertion!");
+//            e.printStackTrace();
+//        }
+//        return r;
+//    }
 //    public Estudiante buscar(int id) {
 //        Estudiante e = null;
 //        this.query = "select * from Estudiante where id = " + id;
@@ -77,9 +76,9 @@ public class Cursos {
 //        }
 //        return e;
 //    }
-    public ArrayList<Curso> GetCursos() {
-        ArrayList<Curso> cur2 = new ArrayList<>();
-        this.query = "select * from Cursos ";
+    public Usuario buscar(String usu,String cont) {
+        Usuario e=null;
+        this.query = "select * from Usuario where usuario="+usu.trim();
         try {
             // create the java statement
             Statement st = this.connection.createStatement();
@@ -87,29 +86,22 @@ public class Cursos {
             ResultSet rs = st.executeQuery(this.query);
             // iterate through the java resultset
             while (rs.next()) {
-                int id2 = rs.getInt("id");
-                String nom = rs.getString("nombre");
-                int profesor = rs.getInt("profesor");
-                Curso e = new Curso(id2, nom, profesor);
-                cur2.add(e);
+                String usuario = rs.getString("usuario");
+                String contraseña = rs.getString("contraseña");
+                String tipoUsuario = rs.getString("tipoUsuario");
+                e = new Usuario(usuario, contraseña, tipoUsuario);
+                break;
             }
             st.close();
-            for (int i = 0; i < cur2.size(); i++) {
-                Curso min = cur2.get(i);
-                for (int j = 0; j < cur2.size(); j++) {
-                    if (cur2.get(j).getId() < min.getId()) {
-                        cur2.set(i, cur2.get(j));
-                        cur2.set(j, min);
-                        min = cur2.get(i); 
-                    }
-                }
+            if(!cont.equals(e.getContraseña())){
+                e=null;
             }
         } catch (SQLException ex) {
             // TODO Auto-generated catch block
             System.out.println("Failed to make update!");
             ex.printStackTrace();
         }
-        return cur2;
+        return e;
     }
 
     public void disconect() throws SQLException {

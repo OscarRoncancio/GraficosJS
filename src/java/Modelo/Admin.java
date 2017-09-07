@@ -9,13 +9,14 @@ package Modelo;
  *
  * @author willy
  */
-public class Profesor {
+public class Admin {
+    
     private int cedula;
     private String nombre;
     private String apellido;
     private String usuario;
 
-    public Profesor(int cedula, String nombre, String apellido, String usuario) {
+    public Admin(int cedula, String nombre, String apellido, String usuario) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -53,6 +54,6 @@ public class Profesor {
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
-
+    
     
 }
