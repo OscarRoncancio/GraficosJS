@@ -13,6 +13,7 @@
     </head>
     <body>
         <p><a href="NEstudiante.jsp">estudiantes</a></p>
+        <p><a href="ListarEstudiantes.jsp">Listar estudiantes por curso</a></p>
         <p><a href="NCurso.jsp">cursos</a></p>
     </body>
 </html>

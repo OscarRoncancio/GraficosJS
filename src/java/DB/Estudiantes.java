@@ -100,7 +100,41 @@ public class Estudiantes {
         return est;
     }
     
-    
+      public ArrayList<Estudiante> GetEstudiantesCurso(int c){
+        ArrayList<Estudiante> est= new ArrayList<>();
+        this.query = "select * from Estudiante where curso = "+c;
+        try {
+            // create the java statement
+            Statement st = this.connection.createStatement();
+            // execute the query, and get a java resultset
+            ResultSet rs = st.executeQuery(this.query);
+            // iterate through the java resultset
+            while (rs.next()) {
+                int id2 = rs.getInt("id");
+                String nom = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                 int curso = rs.getInt("curso");
+                Estudiante e = new Estudiante(id2, nom, apellido,curso);
+                est.add(e);
+            }
+            st.close();
+        } catch (SQLException ex) {
+            // TODO Auto-generated catch block
+            System.out.println("Failed to make update!");
+            ex.printStackTrace();
+        }
+          for (int i = 0; i < est.size(); i++) {
+                Estudiante min = est.get(i);
+                for (int j = 0; j < est.size(); j++) {
+                    if (est.get(j).getId() < min.getId()) {
+                        est.set(i, est.get(j));
+                        est.set(j, min);
+                        min = est.get(i); 
+                    }
+                }
+            }
+        return est;
+    }
     
     
     public void disconect() throws SQLException {

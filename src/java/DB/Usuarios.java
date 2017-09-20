@@ -69,10 +69,10 @@ public class Usuarios {
                 e = new Usuario(usuario, contraseña, tipoUsuario);
                 break;
             }
-            st.close();
             if(!cont.equals(e.getContraseña())){
                 e=null;
             }
+            st.close();
         } catch (SQLException ex) {
             // TODO Auto-generated catch block
             System.out.println("Failed to make update!");
