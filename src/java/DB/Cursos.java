@@ -6,7 +6,6 @@
 package DB;
 
 import Modelo.Curso;
-import Modelo.Estudiante;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,12 +13,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author willy
  */
-public class Cursos {
+public class Cursos implements IBaseDatos<Curso>{
 
     private PreparedStatement preparedStmt;
     private Connection connection;
@@ -29,9 +29,10 @@ public class Cursos {
         DbConnection c = new DbConnection();
         this.connection = c.getConnection();
     }
-
-    public boolean agregar(Curso a) {
-        boolean r = false;
+    
+     @Override
+    public boolean insert(Curso a) {
+         boolean r = false;
         try {
             // the mysql insert statement
             query = " insert into Cursos (id,nombre,profesor)"
@@ -53,32 +54,79 @@ public class Cursos {
         return r;
     }
 
-//    public Estudiante buscar(int id) {
-//        Estudiante e = null;
-//        this.query = "select * from Estudiante where id = " + id;
-//        try {
-//            // create the java statement
-//            Statement st = this.connection.createStatement();
-//            // execute the query, and get a java resultset
-//            ResultSet rs = st.executeQuery(this.query);
-//            // iterate through the java resultset
-//            while (rs.next()) {
-//                int id2 = rs.getInt("id");
-//                String nom = rs.getString("nombre");
-//                String apellido = rs.getString("apellido");
-//                 int curso = rs.getInt("curso");
-//                e = new Estudiante(id2, nom, apellido,curso);
-//            }
-//            st.close();
-//        } catch (SQLException ex) {
-//            // TODO Auto-generated catch block
-//            System.out.println("Failed to make update!");
-//            ex.printStackTrace();
-//        }
-//        return e;
-//    }
-    public ArrayList<Curso> GetCursos() {
-        ArrayList<Curso> cur2 = new ArrayList<>();
+    @Override
+    public boolean update(Curso a) {
+         boolean r = false;
+        if (buscar(a.getId()) != null) {
+            try {
+                //Update
+                // create the java mysql update preparedstatement
+                query = "update Cursos set nombre = ?, profesor=? where id = ?";
+                preparedStmt = connection.prepareStatement(query);
+                preparedStmt.setString(1,a.getNombre());
+                preparedStmt.setInt(2,a.getProfesor());
+                preparedStmt.setInt(3, a.getId());
+                // execute the java preparedstatement
+                preparedStmt.executeUpdate();
+                r = true;
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                System.out.println("Failed to make update!");
+                e.printStackTrace();
+            }
+        }
+        return r;
+    }
+
+    @Override
+    public boolean delete(Curso t) {
+        boolean hecho = false;
+        try {
+            //borramos el curso
+            this.query = "delete from Cursos where id = " + t.getId();
+            this.preparedStmt = this.connection.prepareStatement(this.query);
+            this.preparedStmt.execute();
+            System.out.println(" se borro corectamente \n\n ");
+            //actualizamos la info de los estudiantes que pertenecian al curso 
+            this.query = "update Estudiante set curso = null where curso = "+t.getId();
+            this.preparedStmt = connection.prepareStatement(query);
+            this.preparedStmt.executeUpdate();
+            hecho = true;
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            System.out.println("Failed to make update!");
+            e.printStackTrace();
+        }
+        return hecho;
+    }
+    
+    public Curso buscar(int id) {
+        Curso e = null;
+        this.query = "select * from Curso where id = " + id;
+        try {
+            // create the java statement
+            Statement st = this.connection.createStatement();
+            // execute the query, and get a java resultset
+            ResultSet rs = st.executeQuery(this.query);
+            // iterate through the java resultset
+            while (rs.next()) {
+                int id2 = rs.getInt("id");
+                String nom = rs.getString("nombre");
+                int prof= rs.getInt("profesor");
+                e = new Curso(id, nom, prof);
+            }
+            st.close();
+        } catch (SQLException ex) {
+            // TODO Auto-generated catch block
+            System.out.println("Failed to make update!");
+            ex.printStackTrace();
+        }
+        return e;
+    }
+    
+    @Override
+    public List<Curso> findAll() {
+         ArrayList<Curso> cur2 = new ArrayList();
         this.query = "select * from Cursos ";
         try {
             // create the java statement
@@ -100,7 +148,7 @@ public class Cursos {
                     if (cur2.get(j).getId() < min.getId()) {
                         cur2.set(i, cur2.get(j));
                         cur2.set(j, min);
-                        min = cur2.get(i); 
+                        min = cur2.get(i);
                     }
                 }
             }
@@ -111,8 +159,10 @@ public class Cursos {
         }
         return cur2;
     }
-
-    public void disconect() throws SQLException {
+    
+    
+    
+     public void disconect() throws SQLException {
         this.connection.close();
     }
 
@@ -123,4 +173,5 @@ public class Cursos {
     public Connection getConnection() {
         return connection;
     }
+
 }

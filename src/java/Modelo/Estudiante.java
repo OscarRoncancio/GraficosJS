@@ -13,15 +13,21 @@ public class Estudiante {
     private int id;
     private String nombre;
     private String apellido;
+    private String correoAcudiente;
+    private String nombreAcudiente;
     private int curso;
 
-    public Estudiante(int id, String nombre, String apellido, int curso) {
+    public Estudiante(int id, String nombre, String apellido, String correoAcudiente, String nombreAcudiente, int curso) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
+        this.correoAcudiente = correoAcudiente;
+        this.nombreAcudiente = nombreAcudiente;
         this.curso = curso;
     }
 
+    
+    
     public int getId() {
         return id;
     }
@@ -46,6 +52,22 @@ public class Estudiante {
         this.apellido = apellido;
     }
 
+    public String getCorreoAcudiente() {
+        return correoAcudiente;
+    }
+
+    public void setCorreoAcudiente(String correoAcudiente) {
+        this.correoAcudiente = correoAcudiente;
+    }
+
+    public String getNombreAcudiente() {
+        return nombreAcudiente;
+    }
+
+    public void setNombreAcudiente(String nombreAcudiente) {
+        this.nombreAcudiente = nombreAcudiente;
+    }
+
     public int getCurso() {
         return curso;
     }
@@ -53,7 +75,7 @@ public class Estudiante {
     public void setCurso(int curso) {
         this.curso = curso;
     }
-    
+
     
     
 }

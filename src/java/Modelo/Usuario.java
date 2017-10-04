@@ -11,12 +11,12 @@ package Modelo;
  */
 public class Usuario {
     private String usuario;
-    private String contraseña;
+    private String contrasena;
     private String tipoUsuario;
 
-    public Usuario(String usuario, String contraseña, String tipoUsuario) {
+    public Usuario(String usuario, String contrasena, String tipoUsuario) {
         this.usuario = usuario;
-        this.contraseña = contraseña;
+        this.contrasena = contrasena;
         this.tipoUsuario = tipoUsuario;
     }
 
@@ -28,12 +28,12 @@ public class Usuario {
         this.usuario = usuario;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public String getTipoUsuario() {

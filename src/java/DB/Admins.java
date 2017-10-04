@@ -5,7 +5,7 @@
  */
 package DB;
 
-import Modelo.Curso;
+import Modelo.Admin;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,13 +13,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author willy
  */
-public class Admins {
-     private PreparedStatement preparedStmt;
+public class Admins implements IBaseDatos<Admin> {
+
+    private PreparedStatement preparedStmt;
     private Connection connection;
     private String query;
 
@@ -28,8 +30,9 @@ public class Admins {
         this.connection = c.getConnection();
     }
 
-//    public boolean agregar(Curso a) {
-//        boolean r = false;
+    @Override
+    public boolean insert(Admin t) {
+        boolean r = false;
 //        try {
 //            // the mysql insert statement
 //            query = " insert into Cursos (id,nombre,profesor)"
@@ -48,8 +51,18 @@ public class Admins {
 //            System.out.println("Failed to make insertion!");
 //            e.printStackTrace();
 //        }
-//        return r;
-//    }
+        return r;
+    }
+
+    @Override
+    public boolean update(Admin t) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean delete(Admin t) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 //    public Estudiante buscar(int id) {
 //        Estudiante e = null;
@@ -100,7 +113,7 @@ public class Admins {
 //        }
 //        return cur2;
 //    }
-
+    
     public void disconect() throws SQLException {
         this.connection.close();
     }
@@ -111,5 +124,10 @@ public class Admins {
 
     public Connection getConnection() {
         return connection;
+    }
+
+    @Override
+    public List findAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

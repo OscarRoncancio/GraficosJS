@@ -57,10 +57,7 @@ public class ServletProfesores extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getParameter("nombre").length() != 0) {
             int cedula = Integer.parseInt(request.getParameter("cedula"));
             String nombre = request.getParameter("nombre").trim();
