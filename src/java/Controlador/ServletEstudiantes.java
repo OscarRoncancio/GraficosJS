@@ -8,7 +8,6 @@ package Controlador;
 import DB.Estudiantes;
 import Modelo.Estudiante;
 import com.google.gson.Gson;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URISyntaxException;
@@ -47,6 +46,7 @@ public class ServletEstudiantes extends HttpServlet {
                 Logger.getLogger(ServletEstudiantes.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        System.out.println(" ");
         int hacer = Integer.parseInt(request.getParameter("hidden").trim());
         if (hacer == 1) { //estudiantes de un curso 
             int curso = 0;
@@ -73,6 +73,7 @@ public class ServletEstudiantes extends HttpServlet {
             response.getWriter().write(json);
         }else if (hacer == 3) {//todos estudiantes  
             estudiantes = (ArrayList)this.est.findAll();
+            System.out.println(estudiantes.get(0).getId());
             String json = new Gson().toJson(estudiantes);
             System.out.println(json);
             response.setContentType("application/json");
