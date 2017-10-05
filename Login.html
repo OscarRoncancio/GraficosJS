@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+-<html>
+ -    <head>
+ -        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ -        <link rel="stylesheet" type="text/css" href="css/Opciones_Style.css">
+ -        <link href="https://fonts.googleapis.com/css?family=Pinyon+Script" rel="stylesheet">
+ -        <script type="text/javascript">
+ -            if (history.forward(1)) {
+ -                location.replace(history.forward(1));
+ -            }
+ -        </script>
+ -        <title>Iniciar sesión</title>
+ -       
+ -    </head>
+ -    <body background="fondo.png">
+ -        <form id="form1" action="ServletUsuarios">
+ -            <h1>Iniciar sesión</h1>
+ -            <div style="text-align:center;">
+ -            <table style="margin: 0 auto;">
+ -                <tr>
+ -                    <td><h2>Usuario:</h2></td> 
+ -                    <td><input type="text" name="usuario" placeholder="ingrese su usuario"></td>
+ -                </tr>
+ -                <tr>
+ -                    <td><h2>Contraseña:</h2> </td>
+ -                    <td><input type="password" name="contrasena" placeholder="ingrese su contraseña"></td>
+ -                </tr>
+ -                <tr>
+ -                    <td colspan="3"><input type="submit" id="submit" value="Iniciar Sesión"></td>
+ -                </tr>
+ -            </table>
+ -        </div>
+ -        </form>
+ -        <br>
+ -    <!--    En este div metemos el contenido de la tabla con AJAX -->
+ -    <div id="tabla"></div>
+ -    </body>
+ -</html>
