@@ -7,11 +7,13 @@ package Controlador;
 
 import DB.*;
 import Modelo.*;
+import com.google.gson.Gson;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URISyntaxException;
-import javax.servlet.RequestDispatcher;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -41,11 +43,14 @@ public class ServletProfesores extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-//          Profesor p = this.profesores.buscar(id);
-//         request.setAttribute("profesor",p);
-        RequestDispatcher dispacher = request.getRequestDispatcher("NuevaPersona.jsp");
-        dispacher.forward(request, response);
+        int hacer = Integer.parseInt(request.getParameter("hidden").trim());
+        if (hacer == 1) {
+            ArrayList p = (ArrayList) this.profesores.findAll();
+            String json = new Gson().toJson(p);
+            System.out.println(json);
+            response.setContentType("application/json");
+            response.getWriter().write(json);
+        }
     }
 
     /**
@@ -58,22 +63,44 @@ public class ServletProfesores extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getParameter("nombre").length() != 0) {
-            int cedula = Integer.parseInt(request.getParameter("cedula"));
-            String nombre = request.getParameter("nombre").trim();
-            String apellido = request.getParameter("apellido").trim();
-//            Profesor e = new Profesor(cedula,nombre, apellido);
-//            boolean n = this.profesores.agregar(e);
-//            if (n) {
-//                request.setAttribute("Mensaje", "Se agrego correctamente ");
-//            } else {
-//                request.setAttribute("Mensaje", "id repetido intente nuevamente ");
-//            }
-        } else {
-            request.setAttribute("Mensaje", "casillas incompletas intente nuevamente ");
+        System.out.println(" post");
+        if (profesores == null) {
+            try {
+                this.profesores = new Profesores();
+            } catch (URISyntaxException ex) {
+                Logger.getLogger(ServletEstudiantes.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-
-        RequestDispatcher dispacher = request.getRequestDispatcher("NuevaPersona.jsp");
-        dispacher.forward(request, response);
+        
+        int cedula = 0;
+        String nombre = "", apellido = "", usuario="";
+        int hacer = Integer.parseInt(request.getParameter("hidden").trim());
+        if (hacer == 1) {//nuevo profesor
+            // Obtengo los datos de la peticion
+            try {
+                cedula = Integer.parseInt(request.getParameter("cedula").trim());
+                nombre = request.getParameter("nombre").trim();
+                apellido = request.getParameter("apellido").trim();
+                usuario = request.getParameter("usuario").trim();
+            } catch (Exception e) {
+                cedula = 0;
+            }
+            // Compruebo que los campos del formulario tienen datos para a�adir a la tabla
+            if (!nombre.equals("") && !apellido.equals("") && cedula != 0) {
+                // Creo el objeto persona y lo a�ado al arrayList
+               Profesor p = new Profesor(cedula, nombre, apellido, usuario);
+                boolean a = this.profesores.insert(p);
+                if (a) {
+                    response.setContentType("application/json");
+                    response.getWriter().write("true");
+                } else {
+                    response.setContentType("application/json");
+                    response.getWriter().write("false");
+                }
+            } else {
+                response.setContentType("application/json");
+                response.getWriter().write("false");
+            }
+        }
     }
 }
