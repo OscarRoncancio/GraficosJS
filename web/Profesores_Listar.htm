@@ -33,7 +33,37 @@
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <script>
+            $(document).ready(function () {
+                var parametros = {
+                    "hidden": "1"
+                };
+                $.ajax({
+                    data: parametros,
+                    url: "ServletProfesores",
+                    type: "GET"
 
+                }).done(function (response) {
+                    console.log(response);
+                    var inventario = response;
+                    $("#informaciontablas").show();
+                    $("#tabla1").show();
+                    $("#tabla2").show();
+                    $("#tabla2").empty();
+                    for (var i in inventario) {
+                        $("#tabla2").append(
+                                '<tr>' +
+                                '<td style="width:80px">' + inventario[i].cedula + '</td>' +
+                                '<td style="width:100px">' + inventario[i].nombre + '</td>' +
+                                '<td style="width:100px">' + inventario[i].apellido + '</td>' +
+                                '<td style="width:100px">' + inventario[i].usuario + '</td>' +
+                                '</tr>'
+                                );
+                    }
+
+                });
+            });
+        </script>
 
 
     </head>
