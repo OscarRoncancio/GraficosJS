@@ -6,7 +6,6 @@ $( document ).ready(function() {
 		navsound.play();
 	});*/
 
-
 	$(function(){
         var bgMusic = $('#audio-bg')[0],
             playing = true;

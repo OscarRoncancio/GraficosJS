@@ -33,9 +33,39 @@
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <script>
+            $(document).ready(function () {
+                var parametros = {
+                    "hidden": "1"
+                };
+                $.ajax({
+                    data: parametros,
+                    url: "ServletEstudiantes",
+                    type: "GET"
 
+                }).done(function (response) {
+                    console.log(response);
+                    var inventario = response;
+                    $("#informaciontablas").show();
+                    $("#tabla1").show();
+                    $("#tabla2").show();
+                    $("#tabla2").empty();
+                    for (var i in inventario) {
+                        $("#tabla2").append(
+                                '<tr>' +
+                                '<td style="width:80px">' + inventario[i].id + '</td>' +
+                                '<td style="width:100px">' + inventario[i].nombre + '</td>' +
+                                '<td style="width:100px">' + inventario[i].apellido + '</td>' +
+                                '<td style="width:100px">' + inventario[i].correoAcudiente + '</td>' +
+                                '<td style="width:100px">' + inventario[i].nombreAcudiente + '</td>' +
+                                '<td style="width:100px">' + inventario[i].curso + '</td>' +
+                                '</tr>'
+                                );
+                    }
 
-
+                });
+            });
+        </script>
     </head>
 
     <body>
@@ -189,32 +219,27 @@
                         <div id="wowslider-container1">
                             <img class="full-width" src="images/photo.jpg" alt="slide">
                         </div>
-
-
                         <section class="content service-content">
-                            <h2>Portfolio</h2>
-                            <article>
-                                <h4>Lorem ipsum dolor sit amet</h4>
-                                <div class="content-text full-width">
-                                    <p><strong>Phasellus leo. Sed rhoncus vestibulum nunc. In hac habitasse platea dictumst. Quisque posuere, ante vitae lobortis tincidunt, turpis pede eleifend justo, ut feugiat leo nulla nec lacus.</strong> Maecenas mollis lacinia nisl. In auctor purus a nibh. Curabitur pharetra dui ac dui. Etiam porta dictum felis. In a nisl in neque mattis dignissim. Proin mattis nunc sit amet mauris. Morbi turpis. Donec nonummy, magna nec vestibulum pretium, sem libero ultricies ligula, vel viverra magna magna ut pede. In quis neque. Nunc commodo pulvinar nisi. Suspendisse quis dolor. Vivamus placerat tempor tortor. Cras ullamcorper.</p>
-                                </div>
-                            </article>
+                            <div style="text-align: center" id="informaciontablas">  
+                                <h1 id="tituloInventario">Estudiantes</h1>         
+                                <br>
+                                <br>
+                                <table id="tabla1" border="2">
+                                    <tr>                                    
+                                        <th style="width:100px">ID</th> 
+                                        <th style="width:100px">Nombre</th>                    
+                                        <th style="width:200px">Apellido</th>  
+                                        <th style="width:100px">Correo Acudiente</th> 
+                                        <th style="width:100px">Nombre Acudiente</th> 
+                                        <th style="width:100px">curso</th> 
 
-                            <article>
-                                <h4>Lorem ipsum dolor sit amet</h4>
-                                <div class="content-text full-width">
-                                    <p><strong>Phasellus leo. Sed rhoncus vestibulum nunc. In hac habitasse platea dictumst. Quisque posuere, ante vitae lobortis tincidunt, turpis pede eleifend justo, ut feugiat leo nulla nec lacus.</strong> Maecenas mollis lacinia nisl. In auctor purus a nibh. Curabitur pharetra dui ac dui. Etiam porta dictum felis. In a nisl in neque mattis dignissim. Proin mattis nunc sit amet mauris. Morbi turpis. Donec nonummy, magna nec vestibulum pretium, sem libero ultricies ligula, vel viverra magna magna ut pede. In quis neque. Nunc commodo pulvinar nisi. Suspendisse quis dolor. Vivamus placerat tempor tortor. Cras ullamcorper.</p>
-                                </div>
-                            </article>
+                                    </tr> 
+                                </table>
+                                <table border="2" id="tabla2">
 
-                            <article>
-                                <h4>Lorem ipsum dolor sit amet</h4>
-                                <div class="content-text full-width">
-                                    <p><strong>Phasellus leo. Sed rhoncus vestibulum nunc. In hac habitasse platea dictumst. Quisque posuere, ante vitae lobortis tincidunt, turpis pede eleifend justo, ut feugiat leo nulla nec lacus.</strong> Maecenas mollis lacinia nisl. In auctor purus a nibh. Curabitur pharetra dui ac dui. Etiam porta dictum felis. In a nisl in neque mattis dignissim. Proin mattis nunc sit amet mauris. Morbi turpis. Donec nonummy, magna nec vestibulum pretium, sem libero ultricies ligula, vel viverra magna magna ut pede. In quis neque. Nunc commodo pulvinar nisi. Suspendisse quis dolor. Vivamus placerat tempor tortor. Cras ullamcorper.</p>
-                                </div>
-                            </article>
-
-                            <div class="clear"></div>
+                                </table>         
+                            </div>
+                            
                         </section>
                     </div>
 

@@ -71,6 +71,12 @@ public class ServletEstudiantes extends HttpServlet {
             System.out.println(json);
             response.setContentType("application/json");
             response.getWriter().write(json);
+        }else if (hacer == 3) {//todos estudiantes  
+            estudiantes = (ArrayList)this.est.findAll();
+            String json = new Gson().toJson(estudiantes);
+            System.out.println(json);
+            response.setContentType("application/json");
+            response.getWriter().write(json);
         }
     }
 
