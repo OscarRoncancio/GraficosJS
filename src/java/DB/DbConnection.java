@@ -3,7 +3,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.*;
 
-public class Conexion {
+public class DbConnection {
 	
 	private static Connection CONEXION=null;
     	public static Connection getConnection() throws URISyntaxException{
