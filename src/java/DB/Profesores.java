@@ -42,8 +42,8 @@ public class Profesores implements IBaseDatos<Profesor> {
             while (rs.next()) {
                 int id2 = rs.getInt("cedula");
                 String nom = rs.getString("nombre");
-                String apellido = rs.getString("nombre");
-                String usuario = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                String usuario = rs.getString("usuario");
                 Profesor e = new Profesor(id2, nom, apellido, usuario);
                 mat.add(e);
             }

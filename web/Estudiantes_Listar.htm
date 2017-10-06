@@ -48,10 +48,20 @@
                     var inventario = response;
                     $("#informaciontablas").show();
                     $("#tabla1").show();
-                    $("#tabla2").show();
-                    $("#tabla2").empty();
+                    $("#tabla1").empty();
+                    $("#tabla1").append(
+                            '<tr>' +
+                            '<th style="width:100px">ID</th>' +
+                            '<th style="width:100px">Nombre</th>' +
+                            '<th style="width:200px">Apellido</th>' +
+                            '<th style="width:100px">Correo Acudiente</th>' +
+                            '<th style="width:100px">Nombre Acudiente</th>' +
+                            '<th style="width:100px">curso</th>' +
+                            '</tr>'
+                            );
+
                     for (var i in inventario) {
-                        $("#tabla2").append(
+                        $("#tabla1").append(
                                 '<tr>' +
                                 '<td style="width:80px">' + inventario[i].id + '</td>' +
                                 '<td style="width:100px">' + inventario[i].nombre + '</td>' +
@@ -138,7 +148,7 @@
                             </li>
                             <li>
                                 <a href="Estudiantes_Actualizar.htm">
-                                    <span>Actualizar Profesor</span>
+                                    <span>Actualizar Estudiantes</span>
                                 </a>
                             </li>
                             <li>
@@ -223,23 +233,11 @@
                             <div style="text-align: center" id="informaciontablas">  
                                 <h1 id="tituloInventario">Estudiantes</h1>         
                                 <br>
-                                <br>
-                                <table id="tabla1" border="2">
-                                    <tr>                                    
-                                        <th style="width:100px">ID</th> 
-                                        <th style="width:100px">Nombre</th>                    
-                                        <th style="width:200px">Apellido</th>  
-                                        <th style="width:100px">Correo Acudiente</th> 
-                                        <th style="width:100px">Nombre Acudiente</th> 
-                                        <th style="width:100px">curso</th> 
-
-                                    </tr> 
-                                </table>
-                                <table border="2" id="tabla2">
+                                <table border="2" id="tabla1">
 
                                 </table>         
                             </div>
-                            
+
                         </section>
                     </div>
 

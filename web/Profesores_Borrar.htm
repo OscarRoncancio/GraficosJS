@@ -34,7 +34,31 @@
           <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
+         <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#borrar').click(function (event) {
+                    var parametros = {
+                        "id": $('#id').val(),
+                        "hidden": "3"
+                    };
+                    $.ajax({
+                        data: parametros,
+                        url: "ServletProfesores",
+                        type: "POST"
 
+                    }).done(function (response) {
+                        console.log(response);
+                        var a = response;
+                        if (a === false) {
+                            alert("Error al borrar Profesor");
+                        } else {
+                            alert(" borrado correctamente");
+                        }
+                    });
+                });
+            });
+        </script>
 
     </head>
 
@@ -193,76 +217,19 @@
 
 
                         <section class="content portfolio-content">
-                            <h2>Profesores--------------- Aqui podemos poner las diferentes opciones con imágenes que hagan un HREF</h2>
-                            <ul>
-                                <li class="col-md-6 col-xs-12">
-                                    <div class="vlightbox-cont bloc-img bordered">
-                                        <a class="vlightbox1" href="images/portfolio/photo1-big.jpg" title="about-me">
-                                            <img src="images/thumbs/photo1.jpg" alt="about-me"/>
-                                        </a>
-                                        <span class="vlb">
-                                            Caption here
-                                        </span>
-                                    </div>
-                                    <p>Maecenas mollis lacinia nisl. In auctor purus a nibh. Curabitur pharetra dui ac dui. Etiam porta dictum felis. In a nisl in neque mattis dignissim. Proin mattis nunc sit amet mauris.</p>
-                                </li>
-                                <li class="col-md-6 col-xs-12">
-                                    <div class="vlightbox-cont bloc-img bordered">
-                                        <a class="vlightbox1" href="images/portfolio/photo2-big.jpg" title="about-me">
-                                            <img src="images/thumbs/photo2.jpg" alt="about-me"/>
-                                        </a>
-                                        <span class="vlb">
-                                            Caption here
-                                        </span>
-                                    </div>
-                                    <p>Maecenas mollis lacinia nisl. In auctor purus a nibh. Curabitur pharetra dui ac dui. Etiam porta dictum felis. In a nisl in neque mattis dignissim. Proin mattis nunc sit amet mauris.</p>
-                                </li>
-                                <li class="col-md-6 col-xs-12">
-                                    <div class="vlightbox-cont bloc-img bordered">
-                                        <a class="vlightbox1" href="images/portfolio/photo3-big.jpg" title="about-me">
-                                            <img src="images/thumbs/photo3.jpg" alt="about-me"/>
-                                        </a>
-                                        <span class="vlb">
-                                            Caption here
-                                        </span>
-                                    </div>
-                                    <p>Maecenas mollis lacinia nisl. In auctor purus a nibh. Curabitur pharetra dui ac dui. Etiam porta dictum felis. In a nisl in neque mattis dignissim. Proin mattis nunc sit amet mauris.</p>
-                                </li>
-                                <li class="col-md-6 col-xs-12">
-                                    <div class="vlightbox-cont bloc-img bordered">
-                                        <a class="vlightbox1" href="images/portfolio/photo1-big.jpg" title="about-me">
-                                            <img src="images/thumbs/photo1.jpg" alt="about-me"/>
-                                        </a>
-                                        <span class="vlb">
-                                            Caption here
-                                        </span>
-                                    </div>
-                                    <p>Maecenas mollis lacinia nisl. In auctor purus a nibh. Curabitur pharetra dui ac dui. Etiam porta dictum felis. In a nisl in neque mattis dignissim. Proin mattis nunc sit amet mauris.</p>
-                                </li>
-                                <li class="col-md-6 col-xs-12">
-                                    <div class="vlightbox-cont bloc-img bordered">
-                                        <a class="vlightbox1" href="images/portfolio/photo2-big.jpg" title="about-me">
-                                            <img src="images/thumbs/photo2.jpg" alt="about-me"/>
-                                        </a>
-                                        <span class="vlb">
-                                            Caption here
-                                        </span>
-                                    </div>
-                                    <p>Maecenas mollis lacinia nisl. In auctor purus a nibh. Curabitur pharetra dui ac dui. Etiam porta dictum felis. In a nisl in neque mattis dignissim. Proin mattis nunc sit amet mauris.</p>
-                                </li>
-                                <li class="col-md-6 col-xs-12">
-                                    <div class="vlightbox-cont bloc-img bordered">
-                                        <a class="vlightbox1" href="images/portfolio/photo3-big.jpg" title="about-me">
-                                            <img src="images/thumbs/photo3.jpg" alt="about-me"/>
-                                        </a>
-                                        <span class="vlb">
-                                            Caption here
-                                        </span>
-                                    </div>
-                                    <p>Maecenas mollis lacinia nisl. In auctor purus a nibh. Curabitur pharetra dui ac dui. Etiam porta dictum felis. In a nisl in neque mattis dignissim. Proin mattis nunc sit amet mauris.</p>
-                                </li>
-                            </ul>
-
+                            
+                            <h2>Borrar Profesor</h2>
+                            <form>
+                                <table>
+                                    <tr>
+                                        <td>Id:</td>     
+                                        <td><input type="number" id="id" size="2" placeholder="Ingrese el id del Profesor"/> </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="submit" id="borrar" value="Borrar"></td>
+                                    </tr>
+                                </table>
+                            </form>
                             <div class="clear"></div>
                         </section>
                     </div>

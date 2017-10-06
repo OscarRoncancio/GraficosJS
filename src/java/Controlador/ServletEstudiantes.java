@@ -9,12 +9,10 @@ import DB.Estudiantes;
 import Modelo.Estudiante;
 import com.google.gson.Gson;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -46,7 +44,6 @@ public class ServletEstudiantes extends HttpServlet {
                 Logger.getLogger(ServletEstudiantes.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        System.out.println(" ");
         int hacer = Integer.parseInt(request.getParameter("hidden").trim());
         if (hacer == 1) { //estudiantes de un curso 
             int curso = 0;
@@ -58,7 +55,6 @@ public class ServletEstudiantes extends HttpServlet {
             if (curso != 0) {
                 estudiantes = this.est.GetEstudiantesCurso(curso);
                 String json = new Gson().toJson(estudiantes);
-                System.out.println(json);
                 response.setContentType("application/json");
                 response.getWriter().write(json);
             } else {
@@ -71,11 +67,10 @@ public class ServletEstudiantes extends HttpServlet {
             System.out.println(json);
             response.setContentType("application/json");
             response.getWriter().write(json);
-        }else if (hacer == 3) {//todos estudiantes  
-            estudiantes = (ArrayList)this.est.findAll();
+        } else if (hacer == 3) {//todos estudiantes  
+            estudiantes = (ArrayList) this.est.findAll();
             System.out.println(estudiantes.get(0).getId());
             String json = new Gson().toJson(estudiantes);
-            System.out.println(json);
             response.setContentType("application/json");
             response.getWriter().write(json);
         }
@@ -109,7 +104,7 @@ public class ServletEstudiantes extends HttpServlet {
                 curso = 0;
             }
             // Compruebo que los campos del formulario tienen datos para a�adir a la tabla
-            if (!nombre.equals("") && !apellido.equals("") && id != 0 && curso != 0) {
+            if (!nombre.equals("") && !apellido.equals("") && id != 0) {
                 // Creo el objeto persona y lo a�ado al arrayList
                 Estudiante est = new Estudiante(id, nombre, apellido, correoAcudiente, nombreAcudiente, curso);
                 boolean a = this.est.insert(est);
@@ -122,7 +117,8 @@ public class ServletEstudiantes extends HttpServlet {
                     response.getWriter().write("false");
                 }
             } else {
-                response.getWriter().write("casillas vacias");
+                response.setContentType("application/json");
+                response.getWriter().write("false");
             }
         } else if (hacer == 2) {//asignar curso
             boolean error = false;
@@ -136,6 +132,24 @@ public class ServletEstudiantes extends HttpServlet {
                 Estudiante e = this.est.buscar(id);
                 e.setCurso(curso);
                 boolean hecho = this.est.update(e);
+                if (hecho) {
+                    response.getWriter().write("true");
+                } else {
+                    response.getWriter().write("false");
+                }
+            } else {
+                response.getWriter().write("casillas vacias");
+            }
+        }else if (hacer == 3) { // borrar Estudiante
+            boolean error = false;
+            try {
+                id = Integer.parseInt(request.getParameter("id").trim());
+            } catch (Exception e) {
+                error = true;
+            }
+            if (!error) { ////error se asigna curso a un estudiante que yaa tiene curso 
+                Estudiante e = this.est.buscar(id);
+                boolean hecho = this.est.delete(e);
                 if (hecho) {
                     response.getWriter().write("true");
                 } else {

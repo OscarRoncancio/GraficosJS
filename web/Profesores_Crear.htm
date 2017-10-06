@@ -52,10 +52,10 @@
                     }).done(function (response) {
                         console.log(response);
                         var a = response;
-                        if (a == false) {
-                            alert(" error al crear Profesor ");
+                        if (a === false) {
+                            alert("error al crear Profesor");
                         } else {
-                            alert(" Profesor creado");
+                            alert("Profesor creado correctamente");
                         }
                     });
                 });
@@ -215,7 +215,6 @@
                             <img class="full-width" src="images/Fondo_1.png" alt="slide">
                         </div>
 
-
                         <section class="content portfolio-content">
                             <h1>Nuevo Profesor</h1>
                             <form>
@@ -229,18 +228,17 @@
                                         <td><input type="text" id="nombre" size="20" placeholder="Ingrese el nombre"/>  </td>
                                     <tr>
                                         <td>Apellido: </td>    
-                                        <td><input type="text" id="apellido" size="3" placeholder="Ingrese la sección"/> </td>
+                                        <td><input type="text" id="apellido" size="3" placeholder="Ingrese el apellido"/> </td>
                                     </tr>
                                     <tr>
                                         <td>Usuario: </td>  
-                                        <td><input type="text" id="usuario" size="20" placeholder="Ingrese la disponibilidad"/>  </td>
+                                        <td><input type="text" id="usuario" size="20" placeholder="Ingrese el usuario"/>  </td>
                                     <tr>
                                     <tr>
                                         <td><input type="submit" id="crear" value="Crear"></td>
                                     </tr>
                                 </table>
                             </form>
-                            <div id="respuesta"></div>
                             <div class="clear"></div>
                         </section>
                     </div>

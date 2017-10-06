@@ -15,12 +15,12 @@ import java.util.List;
  *
  * @author willy
  */
-public class Estudiantes implements IBaseDatos<Estudiante>{
+public class Estudiantes implements IBaseDatos<Estudiante> {
 
     private PreparedStatement preparedStmt;
     private Connection connection;
     private String query;
-  
+
     public Estudiantes() throws URISyntaxException {
         DbConnection c = new DbConnection();
         this.connection = c.getConnection();
@@ -43,7 +43,7 @@ public class Estudiantes implements IBaseDatos<Estudiante>{
                 String correoacu = rs.getString("correoAcudiente");
                 String nombreacu = rs.getString("nombreAcudiente");
                 int curso = rs.getInt("curso");
-                Estudiante e = new Estudiante(id2, nom,apellido, correoacu, nombreacu, curso);
+                Estudiante e = new Estudiante(id2, nom, apellido, correoacu, nombreacu, curso);
                 est.add(e);
             }
             st.close();
@@ -60,14 +60,16 @@ public class Estudiantes implements IBaseDatos<Estudiante>{
         boolean r = false;
         try {
             // the mysql insert statement
-            query = " insert into Estudiante (id,nombre,apellido,curso)"
-                    + " values (?, ?, ?, ?);";
+            query = " insert into Estudiante (id,nombre,apellido,correoAcudiente,nombreAcudiente,curso)"
+                    + " values (?, ?, ?, ?, ?, ?);";
             // create the mysql insert preparedstatement
             preparedStmt = connection.prepareStatement(query);
             preparedStmt.setInt(1, a.getId());
             preparedStmt.setString(2, a.getNombre().trim());
             preparedStmt.setString(3, a.getApellido().trim());
-            preparedStmt.setInt(4, a.getCurso());
+            preparedStmt.setString(4, a.getCorreoAcudiente().trim());
+            preparedStmt.setString(5, a.getNombreAcudiente().trim());
+            preparedStmt.setInt(6, a.getCurso());
             // execute the preparedstatement
             preparedStmt.execute();
             System.out.println("You made it, the insertion is ok!");
@@ -89,11 +91,11 @@ public class Estudiantes implements IBaseDatos<Estudiante>{
                 // create the java mysql update preparedstatement
                 query = "update Estudiante set nombre = ?, apellido=?, curso=?, correoAcudiente=?, nombreAcudiente=? where id = ?";
                 preparedStmt = connection.prepareStatement(query);
-                preparedStmt.setString(1,a.getNombre().trim());
-                preparedStmt.setString(2,a.getApellido().trim());
-                preparedStmt.setString(3,a.getCorreoAcudiente().trim());
-                preparedStmt.setString(4,a.getNombreAcudiente().trim());
-                preparedStmt.setInt(5,a.getCurso());
+                preparedStmt.setString(1, a.getNombre().trim());
+                preparedStmt.setString(2, a.getApellido().trim());
+                preparedStmt.setString(3, a.getCorreoAcudiente().trim());
+                preparedStmt.setString(4, a.getNombreAcudiente().trim());
+                preparedStmt.setInt(5, a.getCurso());
                 preparedStmt.setInt(6, a.getId());
                 // execute the java preparedstatement
                 preparedStmt.executeUpdate();
@@ -135,12 +137,12 @@ public class Estudiantes implements IBaseDatos<Estudiante>{
             // iterate through the java resultset
             while (rs.next()) {
                 int id2 = rs.getInt("id");
-               String nom = rs.getString("nombre");
+                String nom = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
                 String correoacu = rs.getString("correoAcudiente");
                 String nombreacu = rs.getString("nombreAcudiente");
                 int curso = rs.getInt("curso");
-                e = new Estudiante(id2, nom,apellido, correoacu, nombreacu, curso);
+                e = new Estudiante(id2, nom, apellido, correoacu, nombreacu, curso);
             }
             st.close();
         } catch (SQLException ex) {
@@ -150,7 +152,7 @@ public class Estudiantes implements IBaseDatos<Estudiante>{
         }
         return e;
     }
-    
+
     public ArrayList<Estudiante> GetEstudiantesCurso(int c) {
         ArrayList<Estudiante> est = new ArrayList();
         this.query = "select * from Estudiante where curso = " + c;
@@ -167,7 +169,7 @@ public class Estudiantes implements IBaseDatos<Estudiante>{
                 String correoacu = rs.getString("correoAcudiente");
                 String nombreacu = rs.getString("nombreAcudiente");
                 int curso = rs.getInt("curso");
-                Estudiante e = new Estudiante(id2, nom,apellido, correoacu, nombreacu, curso);
+                Estudiante e = new Estudiante(id2, nom, apellido, correoacu, nombreacu, curso);
                 est.add(e);
             }
             st.close();
@@ -205,7 +207,7 @@ public class Estudiantes implements IBaseDatos<Estudiante>{
                 String correoacu = rs.getString("correoAcudiente");
                 String nombreacu = rs.getString("nombreAcudiente");
                 int curso = rs.getInt("curso");
-                Estudiante e = new Estudiante(id2, nom,apellido, correoacu, nombreacu, curso);
+                Estudiante e = new Estudiante(id2, nom, apellido, correoacu, nombreacu, curso);
                 est.add(e);
             }
             st.close();
@@ -239,5 +241,4 @@ public class Estudiantes implements IBaseDatos<Estudiante>{
         return connection;
     }
 
-    
 }

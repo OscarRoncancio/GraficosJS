@@ -81,6 +81,24 @@ public class ServletProfesores extends HttpServlet {
                 response.setContentType("application/json");
                 response.getWriter().write("false");
             }
+        }else if (hacer == 3) {
+            boolean error = false;
+            try {
+                cedula = Integer.parseInt(request.getParameter("id").trim());
+            } catch (Exception e) {
+                error = true;
+            }
+            if (!error) { 
+                Profesor e = this.profesores.buscar(cedula);
+                boolean hecho = this.profesores.delete(e);
+                if (hecho) {
+                    response.getWriter().write("true");
+                } else {
+                    response.getWriter().write("false");
+                }
+            } else {
+                response.getWriter().write("casillas vacias");
+            }
         }
     }
 }
