@@ -97,7 +97,7 @@ public class ServletEstudiantes extends HttpServlet {
                 nombre = request.getParameter("nombre").trim();
                 apellido = request.getParameter("apellido").trim();
                 correoAcudiente = request.getParameter("correoAcudiente").trim();
-                nombreAcudiente = request.getParameter("correoAcudiente").trim();
+                nombreAcudiente = request.getParameter("nombreAcudiente").trim();
                 curso = Integer.parseInt(request.getParameter("curso").trim());
             } catch (Exception e) {
                 id = 0;
