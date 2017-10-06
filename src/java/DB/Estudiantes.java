@@ -60,13 +60,15 @@ public class Estudiantes implements IBaseDatos<Estudiante>{
         boolean r = false;
         try {
             // the mysql insert statement
-            query = " insert into Estudiante (id,nombre,apellido,curso)"
-                    + " values (?, ?, ?, ?);";
+            query = " insert into Estudiante (id,nombre,apellido,correoAcudiente,nombreAcudiente,curso)"
+                    + " values (?, ?, ?, ?,?,?);";
             // create the mysql insert preparedstatement
             preparedStmt = connection.prepareStatement(query);
             preparedStmt.setInt(1, a.getId());
             preparedStmt.setString(2, a.getNombre().trim());
-            preparedStmt.setString(3, a.getApellido().trim());
+            preparedStmt.setString(3, a.getApellido().trim());            
+            preparedStmt.setString(3, a.getCorreoAcudiente().trim());
+            preparedStmt.setString(3, a.getNombreAcudiente().trim());
             preparedStmt.setInt(4, a.getCurso());
             // execute the preparedstatement
             preparedStmt.execute();
