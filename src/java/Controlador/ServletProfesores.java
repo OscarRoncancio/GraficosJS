@@ -24,16 +24,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author willy
  */
 public class ServletProfesores extends HttpServlet {
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     private Profesores profesores;
 
     public ServletProfesores() throws FileNotFoundException, URISyntaxException {
@@ -47,20 +37,11 @@ public class ServletProfesores extends HttpServlet {
         if (hacer == 1) {
             ArrayList p = (ArrayList) this.profesores.findAll();
             String json = new Gson().toJson(p);
-            System.out.println(json);
             response.setContentType("application/json");
             response.getWriter().write(json);
         }
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println(" post");
@@ -71,7 +52,6 @@ public class ServletProfesores extends HttpServlet {
                 Logger.getLogger(ServletEstudiantes.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
         int cedula = 0;
         String nombre = "", apellido = "", usuario="";
         int hacer = Integer.parseInt(request.getParameter("hidden").trim());

@@ -33,7 +33,8 @@
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
- <script>
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script>
             $(document).ready(function () {
                 $('#crear').click(function (event) {
                     var parametros = {
@@ -51,10 +52,10 @@
                     }).done(function (response) {
                         console.log(response);
                         var a = response;
-                        if(a == false){
-                             alert(" error al crear Profesor ");
-                        }else{
-                             alert(" Profesor creado");
+                        if (a == false) {
+                            alert(" error al crear Profesor ");
+                        } else {
+                            alert(" Profesor creado");
                         }
                     });
                 });
@@ -217,28 +218,29 @@
 
                         <section class="content portfolio-content">
                             <h1>Nuevo Profesor</h1>
-                            <table>
-                                <tr>
-                                    <td>Cédula:</td>     
-                                    <td><input type="number" id="cedula" size="2" placeholder="Ingrese el id"/> </td>
-                                </tr>
-                                <tr>
-                                    <td>Nombre: </td>  
-                                    <td><input type="text" id="nombre" size="20" placeholder="Ingrese el nombre"/>  </td>
-                                <tr>
-                                    <td>Apellido: </td>    
-                                    <td><input type="text" id="apellido" size="3" placeholder="Ingrese la sección"/> </td>
-                                </tr>
-                                <tr>
-                                    <td>Usuario: </td>  
-                                    <td><input type="text" id="usuario" size="20" placeholder="Ingrese la disponibilidad"/>  </td>
-                                <tr>
-                                <tr>
-                                    <td><input type="submit" id="crear" value="Crear"></td>
-                                </tr>
-                            </table>
-                            
-                             <div id="respuesta"></div>
+                            <form>
+                                <table>
+                                    <tr>
+                                        <td>Cédula:</td>     
+                                        <td><input type="number" id="cedula" size="2" placeholder="Ingrese el id"/> </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nombre: </td>  
+                                        <td><input type="text" id="nombre" size="20" placeholder="Ingrese el nombre"/>  </td>
+                                    <tr>
+                                        <td>Apellido: </td>    
+                                        <td><input type="text" id="apellido" size="3" placeholder="Ingrese la sección"/> </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Usuario: </td>  
+                                        <td><input type="text" id="usuario" size="20" placeholder="Ingrese la disponibilidad"/>  </td>
+                                    <tr>
+                                    <tr>
+                                        <td><input type="submit" id="crear" value="Crear"></td>
+                                    </tr>
+                                </table>
+                            </form>
+                            <div id="respuesta"></div>
                             <div class="clear"></div>
                         </section>
                     </div>
