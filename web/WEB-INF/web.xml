@@ -12,6 +12,14 @@
         <servlet-name>ServletProfesores</servlet-name>
         <servlet-class>Controlador.ServletProfesores</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletNotas</servlet-name>
+        <servlet-class>Controlador.ServletNotas</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletCursos</servlet-name>
+        <servlet-class>Controlador.ServletCursos</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletEstudiantes</servlet-name>
         <url-pattern>/ServletEstudiantes</url-pattern>
@@ -23,6 +31,14 @@
     <servlet-mapping>
         <servlet-name>ServletUsuarios</servlet-name>
         <url-pattern>/ServletUsuarios</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletNotas</servlet-name>
+        <url-pattern>/ServletNotas</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletCursos</servlet-name>
+        <url-pattern>/ServletCursos</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

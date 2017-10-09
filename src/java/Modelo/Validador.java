@@ -6,7 +6,7 @@
 package Modelo;
 
 public class Validador {
-
+    
     public boolean isUsernameOrPasswordValid(String $cadena) {
         char[] cadena = $cadena.toLowerCase().toCharArray();
 

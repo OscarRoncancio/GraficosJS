@@ -67,7 +67,7 @@ import java.util.regex.*;
                      } catch (Exception e) {
                      }
                  } else {
-                     respuesta.setAttribute("error", "Contrase�a no es valida");
+                     respuesta.setAttribute("error", "Contraseña no es valida");
                  }
              } else {
                  respuesta.setAttribute("error", "La direccion de email no es correcta");

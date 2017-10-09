@@ -6,13 +6,14 @@
 package Controlador;
 
 import DB.Cursos;
-import DB.Estudiantes;
-import Modelo.Curso;
-import Modelo.Estudiante;
+import DB.*;
+import Modelo.*;
+import com.google.gson.Gson;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,13 +21,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *      https://blog.openalfa.com/como-leer-y-escribir-ficheros-json-en-java
+ * https://blog.openalfa.com/como-leer-y-escribir-ficheros-json-en-java
+ *
  * @author willy
  */
 @WebServlet(name = "ServletCursos", urlPatterns = {"/ServletCursos"})
 public class ServletCursos extends HttpServlet {
 
-    private static final long serialVersionUID = 1L;
     private Cursos cur;
 
     public ServletCursos() throws URISyntaxException {
@@ -34,96 +35,99 @@ public class ServletCursos extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html; charset=iso-8859-1");
-        PrintWriter out = response.getWriter();
-
-        ArrayList<Curso> cursos =(ArrayList) this.cur.findAll();
-        if (cursos.size() != 0) {
-            out.println("<table style= cellspacing=1 bgcolor=#0099cc>");
-            out.println("<tr>");
-            out.println("<td style= rowspan=7 align=center bgcolor=#f8f8f8> ID </td>");
-            out.println("<td style= rowspan=7 align=center bgcolor=#f8f8f8> NOMBRE </td>");
-            out.println("<td style= rowspan=7 align=center bgcolor=#f8f8f8>PROFESOR</td>");
-            out.println("</tr>");
-            for (int i = 0; i < cursos.size(); i++) {
-                Curso est1 = cursos.get(i);
-                out.println("<tr>");
-                out.println("<td style= rowspan=7 align=center bgcolor=#f8f8f8>" + est1.getId() + "</td>");
-                out.println("<td style= rowspan=7 align=center bgcolor=#f8f8f8>" + est1.getNombre() + "</td>");
-                out.println("<td style= rowspan=7 align=center bgcolor=#f8f8f8>" + est1.getProfesor() + "</td>");
-                out.println("</tr>");
+        if (cur == null) {
+            try {
+                this.cur = new Cursos();
+            } catch (URISyntaxException ex) {
+                Logger.getLogger(ServletCursos.class.getName()).log(Level.SEVERE, null, ex);
             }
-            out.println("</table>");
-        } else {
-            out.println("  no hay Cursos ");
         }
 
+        int hacer = Integer.parseInt(request.getParameter("hidden").trim());
+        if (hacer == 1) {
+            ArrayList p = (ArrayList) this.cur.findAll();
+            String json = new Gson().toJson(p);
+            response.setContentType("application/json");
+            response.getWriter().write(json);
+        }if(hacer == 2){ // buscar 
+            int id = 0;
+             try {
+                id = Integer.parseInt(request.getParameter("id").trim());
+            } catch (Exception e) {
+                id=0;
+            }
+            Curso c = this.cur.buscar(id);
+            String json = new Gson().toJson(c);
+            response.setContentType("application/json");
+            response.getWriter().write(json);
+        }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        response.setContentType("text/html; charset=iso-8859-1");
-        PrintWriter out = response.getWriter();
-        int hacer = Integer.parseInt(request.getParameter("hidden").trim());
+        Profesores prof = null;
+        try {
+            prof = new Profesores();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(ServletCursos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (cur == null) {
+            try {
+                this.cur = new Cursos();
+            } catch (URISyntaxException ex) {
+                Logger.getLogger(ServletEstudiantes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         int id = 0, profesor = 0;
-        String nombre = "";
-
-        if (hacer == 1) {// Crear Curso
+        String nombre = " ";
+        int hacer = Integer.parseInt(request.getParameter("hidden").trim());
+        if (hacer == 1) {//nuevo curso
             // Obtengo los datos de la peticion
             try {
-                id = Integer.parseInt(request.getParameter("id").trim());
                 nombre = request.getParameter("nombre").trim();
+                id = Integer.parseInt(request.getParameter("id").trim());
                 profesor = Integer.parseInt(request.getParameter("profesor").trim());
             } catch (Exception e) {
                 id = 0;
                 profesor = 0;
             }
-            // Compruebo que los campos del formulario tienen datos para añadir a la tabla
-            if (!nombre.equals("") && id != 0 && profesor != 0) {
-                // Creo el objeto persona y lo añado al arrayList
-                Curso c = new Curso(id, nombre, profesor);
-                boolean a = this.cur.insert(c);
-                ArrayList<Curso> cursos =(ArrayList) this.cur.findAll();
-                if (a) {
-                    out.println("<table style= cellspacing=1 bgcolor=#0099cc>");
-                    out.println("<tr>");
-                    out.println("<td style= rowspan=7 align=center bgcolor=#f8f8f8> ID </td>");
-                    out.println("<td style= rowspan=7 align=center bgcolor=#f8f8f8> NOMBRE </td>");
-                    out.println("<td style= rowspan=7 align=center bgcolor=#f8f8f8> PROFESOR</td>");
-                    out.println("</tr>");
-                    for (int i = 0; i < cursos.size(); i++) {
-                        Curso est1 = cursos.get(i);
-                        out.println("<tr>");
-                        out.println("<td style= rowspan=7 align=center bgcolor=#f8f8f8>" + est1.getId() + "</td>");
-                        out.println("<td style= rowspan=7 align=center bgcolor=#f8f8f8>" + est1.getNombre() + "</td>");
-                        out.println("<td style= rowspan=7 align=center bgcolor=#f8f8f8>" + est1.getProfesor() + "</td>");
-                        out.println("</tr>");
+            // Compruebo que los campos del formulario tienen datos para a�adir a la tabla
+            if (!nombre.equals("") && profesor != 0 && id != 0) {
+
+                if (prof.buscar(profesor) != null) {
+                    Curso c = new Curso(id, nombre, profesor);
+                    boolean a = this.cur.insert(c);
+                    if (a) {
+                        response.setContentType("application/json");
+                        response.getWriter().write("Curso creado correctamente");
+                    } else {
+                        response.setContentType("application/json");
+                        response.getWriter().write("no se pudo crear el curso ");
                     }
-                    out.println("</table>");
                 } else {
-                    out.println("error al agregar");
+                    response.setContentType("application/json");
+                    response.getWriter().write("no existe el profesor ");
                 }
             } else {
-                out.println("casillas vacias ");
+                response.setContentType("application/json");
+                response.getWriter().write("error Casillas Vacias");
             }
-        } else if (hacer == 2) {
-            //Eliminar Curso 
-            // Obtengo los datos de la peticion
+        } else if (hacer == 3) {//eliminar
+            boolean error = false;
             try {
                 id = Integer.parseInt(request.getParameter("id").trim());
             } catch (Exception e) {
-                id = 0;
+                error = true;
             }
-            if (id != 0) {
-                Curso c= this.cur.buscar(id);
-                boolean hecho = this.cur.delete(c);
+            if (!error) {
+                Curso e = this.cur.buscar(id);
+                boolean hecho = this.cur.delete(e);
                 if (hecho) {
-                    out.println("el curso se borro satisfactoriamente ");
+                    response.getWriter().write("curso borrado correctamente");
                 } else {
-                    out.println(" error al borrar ");
+                    response.getWriter().write("error al borrar");
                 }
             } else {
-                out.println("casillas vacias ");
+                response.getWriter().write("casillas vacias");
             }
         }
     }
