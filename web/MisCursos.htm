@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="fr"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="fr"> <![endif]-->
 <!--[if IE 8]>    <html class="no-js ie8 oldie" lang="fr"> <![endif]-->
@@ -8,7 +8,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Estudiantes</title>
+        <title>Mis Cursos</title>
         <!--BEGIN OF TERMS OF USE. DO NOT EDIT OR DELETE THESE LINES. IF YOU EDIT OR DELETE THESE LINES AN ALERT MESSAGE MAY APPEAR WHEN TEMPLATE WILL BE ONLINE-->
         <style>#free-flash-header a,#free-flash-header a:hover {color:#363636;}#free-flash-header a:hover {text-decoration:none}</style>
         <!--END OF TERMS OF USE-->
@@ -33,35 +33,42 @@
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-        <script src="http://code.jquery.com/jquery-latest.js"></script>
         <script>
-            $(document).ready(function () {
-                $('#crear').click(function (event) {
-                    var parametros = {
-                        "id": $('#id').val(),
-                        "nombre": $('#nombre').val(),
-                        "apellido": $('#apellido').val(),
-                        "correoAcudiente": $('#correoAcudiente').val(),
-                        "nombreAcudiente": $('#nombreAcudiente').val(),
-                        "curso": $('#curso').val(),
-                        "hidden": "1"
-                    };
-                    $.ajax({
-                        data: parametros,
-                        url: "ServletEstudiantes",
-                        type: "POST"
+            window.onload = function () {
+                var parametros = {
+                    "hidden": "1"
+                };
+                $.ajax({
+                    data: parametros,
+                    url: "ServletCursos",
+                    type: "GET"
 
-                    }).done(function (response) {
-                        console.log(response);
-                        var a = response;
-                        if (a === false) {
-                            alert("Error al crear Estudiante");
-                        } else {
-                            alert("Estudiante creado correctamente");
-                        }
-                    });
+                }).done(function (response) {
+                    console.log(response);
+                    var inventario = response;
+                    $("#informaciontablas").show();
+                    $("#tabla1").show();
+                    $("#tabla1").empty();
+                    $("#tabla1").append(
+                            '<tr>' +
+                            '<th style="width:100px">ID</th>' +
+                            '<th style="width:100px">Nombre</th>' +
+                            '<th style="width:200px">Profesor</th>' +
+                            '</tr>'
+                            );
+
+                    for (var i in inventario) {
+                        $("#tabla1").append(
+                                '<tr>' +
+                                '<td style="width:80px">' + inventario[i].id + '</td>' +
+                                '<td style="width:100px">' + inventario[i].nombre + '</td>' +
+                                '<td style="width:100px">' + inventario[i].profesor + '</td>' +
+                                '</tr>'
+                                );
+                    }
+
                 });
-            });
+            };
         </script>
     </head>
 
@@ -123,29 +130,34 @@
                                     <span>Profesores</span>
                                 </a>
                             </li>
-                            <li class="active">
+                            <li>
                                 <a href="Estudiantes.htm">
                                     <span>Estudiantes</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="Estudiantes_Listar.htm">
-                                    <span>Listar Estudiantes</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="Estudiantes_Actualizar.htm">
-                                    <span>Actualizar Estudiantes</span>
+                            <li class="active">
+                                <a href="Cursos.htm">
+                                    <span>Cursos</span>
                                 </a>
                             </li>
                             <li class="active">
-                                <a href="Estudiantes_Crear.htm">
-                                    <span>Crear Estudiantes</span>
+                                <a href="Cursos_Listar.htm">
+                                    <span>Listar Cursos</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="Estudiantes_Borrar.htm">
-                                    <span>Borrar Estudiantes</span>
+                                <a href="Cursos_Actualizar.htm">
+                                    <span>Actualizar Cursos</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="Cursos_Crear.htm">
+                                    <span>Crear Cursos</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="Cursos_Borrar.htm">
+                                    <span>Borrar Cursos</span>
                                 </a>
                             </li>
                             <li>
@@ -216,42 +228,15 @@
                         <div id="wowslider-container1">
                             <img class="full-width" src="images/Fondo_1.png" alt="slide">
                         </div>
-
-
                         <section class="content service-content">
-                            <h1>Nuevo Estudiante</h1>
-                            <form>
-                                <table>
-                                    <tr>
-                                        <td>Id:</td>     
-                                        <td><input type="number" id="id"  placeholder="Ingrese el id"/> </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Nombre: </td>  
-                                        <td><input type="text" id="nombre" size="20" placeholder="Ingrese el nombre"/>  </td>
-                                    <tr>
-                                        <td>Apellido: </td>    
-                                        <td><input type="text" id="apellido" size="3" placeholder="Ingrese el apellido"/> </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Correo Acudiente: </td>  
-                                        <td><input type="text" id="correoAcudiente" size="20" placeholder="Ingrese correo del acudiente"/>  </td>
-                                    <tr>
-                                    <tr>
-                                        <td>Nombre Acudiente: </td>  
-                                        <td><input type="text" id="nombreAcudiente" size="20" placeholder="Ingrese el nombre del acudiente"/>  </td>
-                                    <tr>
-                                    <tr>
-                                        <td>Curso: </td>  
-                                        <td><input type="number" id="curso"  placeholder="Ingrese el curso"/>  </td>
-                                    <tr>
+                            <div style="text-align: center" id="informaciontablas">  
+                                <h1 id="tituloInventario">Cursos</h1>         
+                                <br>
+                                <table border="2" id="tabla1">
 
-                                    <tr>
-                                        <td><input type="submit" id="crear" value="Crear"></td>
-                                    </tr>
-                                </table>
-                            </form>
-                            <div class="clear"></div>
+                                </table>         
+                            </div>
+
                         </section>
                     </div>
 

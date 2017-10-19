@@ -33,35 +33,50 @@
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-        <script src="http://code.jquery.com/jquery-latest.js"></script>
         <script>
-            $(document).ready(function () {
-                $('#crear').click(function (event) {
+            window.onload = function () {
+                $('#buscar').click(function (event) {
                     var parametros = {
-                        "id": $('#id').val(),
-                        "nombre": $('#nombre').val(),
-                        "apellido": $('#apellido').val(),
-                        "correoAcudiente": $('#correoAcudiente').val(),
-                        "nombreAcudiente": $('#nombreAcudiente').val(),
-                        "curso": $('#curso').val(),
                         "hidden": "1"
                     };
                     $.ajax({
                         data: parametros,
                         url: "ServletEstudiantes",
-                        type: "POST"
+                        type: "GET"
 
                     }).done(function (response) {
                         console.log(response);
-                        var a = response;
-                        if (a === false) {
-                            alert("Error al crear Estudiante");
-                        } else {
-                            alert("Estudiante creado correctamente");
+                        var inventario = response;
+                        $("#informaciontablas").show();
+                        $("#tabla1").show();
+                        $("#tabla1").empty();
+                        $("#tabla1").append(
+                                '<tr>' +
+                                '<th style="width:100px">ID</th>' +
+                                '<th style="width:100px">Nombre</th>' +
+                                '<th style="width:200px">Apellido</th>' +
+                                '<th style="width:100px">Correo Acudiente</th>' +
+                                '<th style="width:100px">Nombre Acudiente</th>' +
+                                '<th style="width:100px">curso</th>' +
+                                '</tr>'
+                                );
+
+                        for (var i in inventario) {
+                            $("#tabla1").append(
+                                    '<tr>' +
+                                    '<td style="width:80px">' + inventario[i].id + '</td>' +
+                                    '<td style="width:100px">' + inventario[i].nombre + '</td>' +
+                                    '<td style="width:100px">' + inventario[i].apellido + '</td>' +
+                                    '<td style="width:100px">' + inventario[i].correoAcudiente + '</td>' +
+                                    '<td style="width:100px">' + inventario[i].nombreAcudiente + '</td>' +
+                                    '<td style="width:100px">' + inventario[i].curso + '</td>' +
+                                    '</tr>'
+                                    );
                         }
+
                     });
                 });
-            });
+            };
         </script>
     </head>
 
@@ -118,34 +133,14 @@
                                     <span>Inicio</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="Profesores.htm">
-                                    <span>Profesores</span>
-                                </a>
-                            </li>
                             <li class="active">
-                                <a href="Estudiantes.htm">
-                                    <span>Estudiantes</span>
+                                <a href="Listar_Estudiantes_Curso.htm">
+                                    <span>Listar Estudiantes de un Curso</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="Estudiantes_Listar.htm">
-                                    <span>Listar Estudiantes</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="Estudiantes_Actualizar.htm">
-                                    <span>Actualizar Estudiantes</span>
-                                </a>
-                            </li>
-                            <li class="active">
-                                <a href="Estudiantes_Crear.htm">
-                                    <span>Crear Estudiantes</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="Estudiantes_Borrar.htm">
-                                    <span>Borrar Estudiantes</span>
+                                <a href="MisCursos.htm">
+                                    <span>Mis Cursos</span>
                                 </a>
                             </li>
                             <li>
@@ -216,42 +211,28 @@
                         <div id="wowslider-container1">
                             <img class="full-width" src="images/Fondo_1.png" alt="slide">
                         </div>
-
-
                         <section class="content service-content">
-                            <h1>Nuevo Estudiante</h1>
-                            <form>
-                                <table>
-                                    <tr>
-                                        <td>Id:</td>     
-                                        <td><input type="number" id="id"  placeholder="Ingrese el id"/> </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Nombre: </td>  
-                                        <td><input type="text" id="nombre" size="20" placeholder="Ingrese el nombre"/>  </td>
-                                    <tr>
-                                        <td>Apellido: </td>    
-                                        <td><input type="text" id="apellido" size="3" placeholder="Ingrese el apellido"/> </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Correo Acudiente: </td>  
-                                        <td><input type="text" id="correoAcudiente" size="20" placeholder="Ingrese correo del acudiente"/>  </td>
-                                    <tr>
-                                    <tr>
-                                        <td>Nombre Acudiente: </td>  
-                                        <td><input type="text" id="nombreAcudiente" size="20" placeholder="Ingrese el nombre del acudiente"/>  </td>
-                                    <tr>
+                            <div><table>
                                     <tr>
                                         <td>Curso: </td>  
                                         <td><input type="number" id="curso"  placeholder="Ingrese el curso"/>  </td>
                                     <tr>
 
                                     <tr>
-                                        <td><input type="submit" id="crear" value="Crear"></td>
+                                        <td><input type="submit" id="buscar" value="Crear"></td>
                                     </tr>
                                 </table>
-                            </form>
-                            <div class="clear"></div>
+                            </div>
+                            <div style="text-align: center" id="informaciontablas">  
+                                <h1 id="tituloInventario">Estudiantes</h1>         
+                                <br>
+                                <br>
+                                <table border="2" id="tabla1">
+
+
+                                </table>         
+                            </div>
+
                         </section>
                     </div>
 
