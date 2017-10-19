@@ -35,7 +35,50 @@
         <![endif]-->
         <script>
             window.onload = function () {
+
                 $('#buscar').click(function (event) {
+                    do {
+                        var parametros = {
+                            "hidden": "3"
+                        };
+                        $.ajax({
+                            data: parametros,
+                            url: "ServletEstudiantes",
+                            type: "GET"
+
+                        }).done(function (response) {
+                            console.log(response);
+                            var inventario = response;
+                            $("#informaciontablas").show();
+                            $("#tabla1").show();
+                            $("#tabla1").empty();
+                            $("#tabla1").append(
+                                    '<tr>' +
+                                    '<th style="width:100px">ID</th>' +
+                                    '<th style="width:100px">Nombre</th>' +
+                                    '<th style="width:200px">Apellido</th>' +
+                                    '<th style="width:100px">Correo Acudiente</th>' +
+                                    '<th style="width:100px">Nombre Acudiente</th>' +
+                                    '<th style="width:100px">curso</th>' +
+                                    '</tr>'
+                                    );
+                            for (var i in inventario) {
+                                $("#tabla1").append(
+                                        '<tr>' +
+                                        '<td style="width:80px">' + inventario[i].id + '</td>' +
+                                        '<td style="width:100px">' + inventario[i].nombre + '</td>' +
+                                        '<td style="width:100px">' + inventario[i].apellido + '</td>' +
+                                        '<td style="width:100px">' + inventario[i].correoAcudiente + '</td>' +
+                                        '<td style="width:100px">' + inventario[i].nombreAcudiente + '</td>' +
+                                        '<td style="width:100px">' + inventario[i].curso + '</td>' +
+                                        '</tr>'
+                                        );
+                            }
+
+                        });
+                        
+                        var i = 0;
+                    } while (i = 1);
                     var parametros = {
                         "hidden": "1"
                     };
@@ -60,7 +103,6 @@
                                 '<th style="width:100px">curso</th>' +
                                 '</tr>'
                                 );
-
                         for (var i in inventario) {
                             $("#tabla1").append(
                                     '<tr>' +
@@ -76,8 +118,7 @@
 
                     });
                 });
-            };
-        </script>
+            };</script>
     </head>
 
     <body>
@@ -212,14 +253,15 @@
                             <img class="full-width" src="images/Fondo_1.png" alt="slide">
                         </div>
                         <section class="content service-content">
-                            <div><table>
+                            <div>
+                                <table>
                                     <tr>
                                         <td>Curso: </td>  
                                         <td><input type="number" id="curso"  placeholder="Ingrese el curso"/>  </td>
                                     <tr>
 
                                     <tr>
-                                        <td><input type="submit" id="buscar" value="Crear"></td>
+                                        <td><input type="submit" id="buscar" value="Buscar"></td>
                                     </tr>
                                 </table>
                             </div>
