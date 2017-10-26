@@ -39,9 +39,9 @@
                     "hidden": "3"
                 };
                 $.ajax({
-                data: parametros,
-                        url: "ServletEstudiantes",
-                        type: "GET"
+                    data: parametros,
+                    url: "ServletEstudiantes",
+                    type: "GET"
 
                 }).done(function (response) {
                     console.log(response);
@@ -61,18 +61,18 @@
                             );
 
                     for (var i in inventario) {
-                    $("#tabla1").append(
-                            '<tr>' +
-                            '<td style="width:80px">' + inventario[i].id + '</td>' +
-                            '<td style="width:100px">' + inventario[i].nombre + '</td>' +
-                            '<td style="width:100px">' + inventario[i].apellido + '</td>' +
-                            '<td style="width:100px">' + inventario[i].correoAcudiente + '</td>' +
-                            '<td style="width:100px">' + inventario[i].nombreAcudiente + '</td>' +
-                            '<td style="width:100px">' + inventario[i].curso + '</td>' +
-                            '< td >'+'< input type = "number" id = "nota"  placeholder = "Ingrese la Nota" / >'+'< /td>'+                           
-                            '</tr>'
-                            );
-                }
+                        $("#tabla1").append(
+                                '<tr>' +
+                                '<td style="width:80px">' + inventario[i].id + '</td>' +
+                                '<td style="width:100px">' + inventario[i].nombre + '</td>' +
+                                '<td style="width:100px">' + inventario[i].apellido + '</td>' +
+                                '<td style="width:100px">' + inventario[i].correoAcudiente + '</td>' +
+                                '<td style="width:100px">' + inventario[i].nombreAcudiente + '</td>' +
+                                '<td style="width:100px">' + inventario[i].curso + '</td>' +
+                                '< td >' + '< input type = "number" id = "nota"  placeholder = "Ingrese la Nota" / >' + '< /td>' +
+                                '</tr>'
+                                );
+                    }
 
                 });
             };
