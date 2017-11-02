@@ -5,6 +5,18 @@
         <servlet-class>Controlador.ServletUsuarios</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ServletGraficoPE</servlet-name>
+        <servlet-class>Controlador.ServletGraficoPE</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletPDF</servlet-name>
+        <servlet-class>Controlador.ServletPDF</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletGraficoTE</servlet-name>
+        <servlet-class>Controlador.ServletGraficoTE</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ServletEstudiantes</servlet-name>
         <servlet-class>Controlador.ServletEstudiantes</servlet-class>
     </servlet>
@@ -23,6 +35,18 @@
     <servlet-mapping>
         <servlet-name>ServletEstudiantes</servlet-name>
         <url-pattern>/ServletEstudiantes</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletPDF</servlet-name>
+        <url-pattern>/ServletPDF</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletGraficoTE</servlet-name>
+        <url-pattern>/ServletGraficoTE</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletGraficoPE</servlet-name>
+        <url-pattern>/ServletGraficoPE</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletProfesores</servlet-name>

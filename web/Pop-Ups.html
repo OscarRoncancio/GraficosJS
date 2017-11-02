@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Create Como crear un Pop up, modal frame o ventana emergente elegante con scale transform </title>
+
+
+
+    <link rel="stylesheet" href="css/demo.css">
+</head>
+<body>
+
+    <h2>Como crear un pop up (modal frame o ventana emergente)</h2>
+
+    <input type="button" value="Pop up en Zoom In" class="button" data-type="zoomin" />
+    <input type="button" value="Pop up en Zoom Out" class="button" data-type="zoomout" />
+
+    <div class="overlay-container">
+        <div class="window-container zoomin">
+
+            <form id="contact_form" action="#" method="POST" enctype="multipart/form-data">
+                <div class="row">
+                    <label for="name">Tu nombre:</label><br />
+                    <input id="name" class="input" name="name" type="text" value="" size="30" /><br />
+                </div>
+                <div class="row">
+                    <label for="email">Tu email:</label><br />
+                    <input id="email" class="input" name="email" type="text" value="" size="30" /><br />
+                </div>
+                <div class="row">
+                    <label for="message">Tu mensaje:</label><br />
+                    <textarea id="message" class="input" name="message" rows="7" cols="30"></textarea><br />
+                </div>
+                <input id="submit_button" type="submit" value="Send email" />
+            </form>						
+
+
+            <br/>
+            <span class="close">Cerrar</span>
+        </div>
+        <div class="window-container zoomout">
+            <h3>Versión en Zoom out </h3> 
+            Texto de la ventana emergente<br/>
+            <br/>
+            <span class="close">Cerrar</span>
+        </div>
+    </div>
+
+
+    <script>!window.jQuery && document.write(unescape('%3Cscript src="js/jquery-1.7.1.min.js"%3E%3C/script%3E'))</script>
+    <script type="text/javascript" src="js/demo.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+drop database if exists db;
+create database db;
+use db;
+create table Usuario(
+usuario varchar(40) not null primary key,
+contraseña varchar(40) not null,
+tipoUsuario varchar(40) not null
+);
+
+create table Admin(
+cedula varchar(40) not null primary key,
+nombre varchar(40) not null,
+apellido varchar(40) not null,
+usuario varchar(40) not null
+);
+
+create table Profesor(
+cedula varchar(40) not null primary key,
+nombre varchar(40) not null,
+apellido varchar(40) not null,
+usuario varchar(40) not null
+);
+
+create table Cursos(
+id integer not null primary key,
+nombre varchar(40) not null,
+profesor varchar(40) not null
+);
+
+create table Estudiante(
+id varchar(40) not null primary key,
+nombre varchar(40) not null,
+apellido varchar(40) not null,
+correoAcudiente varchar(40) not null,
+nombreAcudiente varchar(40) not null,
+curso integer 
+);
+
+create table Materia(
+id integer not null primary key,
+nombre varchar(40) not null,
+profesor varchar(40) not null,
+curso integer not null,
+intHoraria integer not null
+);
+
+create table Nota(
+
+id integer not null primary key,
+estudiante varchar(40) not null,
+materia varchar(40) not null,
+valor integer not null,
+periodo integer not null,
+observacion varchar(200) not null,
+id_est varchar(40) not null,
+FOREIGN KEY (id_est)  REFERENCES Estudiante (id)
+);
+
+create table horario(
+id integer not null primary key,
+materia integer not null,
+dia integer not null,
+hinicio integer not null,
+hfin integer not null
+);
+
+insert into Usuario (usuario,contraseña,tipoUsuario) values 
+('admin1@gmail.com','1234','admin'),
+('prof1@gmail.com','12345','profesor'),
+('admin2@gmail.com','123456','admin'),
+('prof2@gmail.com','1234567','profesor');
+
+insert into Admin(cedula,nombre,apellido,usuario) values 
+(1016,'admin1','g','admin1@gmail.com'),
+(4562,'admin2','h','admin2@gmail.com');
+
+insert into Profesor (cedula,nombre,apellido,usuario) values 
+(1016,'prof1','g','prof1@gmail.com'),
+(4562,'prof2','h','prof2@gmail.com');
+
+insert into Cursos (id,nombre,profesor) values 
+(1,'101',1016),
+(2,'201',4562);
+
+insert into Estudiante (id,nombre,apellido,correoAcudiente,nombreAcudiente,curso) values 
+('34567','felipe','g','jaime@gmail.com','jaime',1),
+('123456','daniel','v','jaime2@gmail.com','jaime2',2),
+('2','andres','h','jaime3@gmail.com','jaime3',1);
+
+insert into Nota(id,estudiante,materia,valor,periodo,observacion,id_est) values
+(1,'a','español',50,1,'-','34567'),
+(2,'b','matematicas',40,1,'-','34567'),
+(3,'c','español',30,1,'-','123456'),
+(4,'d','matematicas',20,1,'-','123456'),
+(5,'e','español',10,1,'-','2'),
+(6,'f','matematicas',50,1,'-','2');
