@@ -54,6 +54,9 @@
                             '<th style="width:100px">ID</th>' +
                             '<th style="width:100px">Nombre</th>' +
                             '<th style="width:200px">Profesor</th>' +
+                            '<th style="width:100px">Entrar al Curso</th>' +
+                            '<th style="width:100px">Editar</th>' +
+                            '<th style="width:100px">Borrar</th>' +
                             '</tr>'
                             );
 
@@ -63,6 +66,9 @@
                                 '<td style="width:80px">' + inventario[i].id + '</td>' +
                                 '<td style="width:100px">' + inventario[i].nombre + '</td>' +
                                 '<td style="width:100px">' + inventario[i].profesor + '</td>' +
+                                '<td style="width:100px"> <input type="button" id = "Entrar_al_Curso" value="Entrar al curso href=""></td>' +
+                                '<td style="width:100px"> <input type="button" id = "bt-' + inventario[i].cedula + '" value="Editar"></td>' +
+                                '<td style="width:100px"> <input type="button" id = "bt-' + inventario[i].cedula + '" value="Borrar"></td>' +
                                 '</tr>'
                                 );
                     }
@@ -126,53 +132,23 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="Profesores.htm">
+                                <a href="Profesores_Listar.htm">
                                     <span>Profesores</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="Estudiantes.htm">
+                                <a href="Estudiantes_Listar.htm">
                                     <span>Estudiantes</span>
                                 </a>
                             </li>
                             <li class="active">
-                                <a href="Cursos.htm">
-                                    <span>Cursos</span>
-                                </a>
-                            </li>
-                            <li class="active">
                                 <a href="Cursos_Listar.htm">
-                                    <span>Listar Cursos</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="Cursos_Actualizar.htm">
-                                    <span>Actualizar Cursos</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="Cursos_Crear.htm">
-                                    <span>Crear Cursos</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="Cursos_Borrar.htm">
-                                    <span>Borrar Cursos</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="Horario.htm">
-                                    <span>Horario</span>
+                                    <span>Cursos</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="Datos_Personales.htm">
                                     <span>Datos Personales</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="Contactenos.htm">
-                                    <span>Contáctenos</span>
                                 </a>
                             </li>
                         </ul>

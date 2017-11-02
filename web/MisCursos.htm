@@ -55,7 +55,7 @@
                             '<tr>' +
                             '<th style="width:100px">ID</th>' +
                             '<th style="width:100px">Nombre</th>' +
-                            '<th style="width:200px">Profesor</th>' +
+                            '<th style="width:200px">Entrar al curso</th>' +
                             '</tr>'
                             );
 
@@ -64,7 +64,8 @@
                                 '<tr>' +
                                 '<td style="width:80px">' + inventario[i].id + '</td>' +
                                 '<td style="width:100px">' + inventario[i].nombre + '</td>' +
-                                '<td style="width:100px">' + inventario[i].profesor + '</td>' +
+                                '<td style="width:100px"> <input type="button" id = "bt-'+ inventario[i].id+'" value="Pdf"></td>' +
+                                
                                 '</tr>'
                                 );
                     }
@@ -138,18 +139,8 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="Horario.htm">
-                                    <span>Horario</span>
-                                </a>
-                            </li>
-                            <li>
                                 <a href="Datos_Personales_Profesor.htm">
                                     <span>Datos Personales</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="Contactenos.htm">
-                                    <span>Contáctenos</span>
                                 </a>
                             </li>
                         </ul>

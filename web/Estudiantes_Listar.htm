@@ -53,23 +53,32 @@
                             '<tr>' +
                             '<th style="width:100px">ID</th>' +
                             '<th style="width:100px">Nombre</th>' +
-                            '<th style="width:200px">Apellido</th>' +
+                            '<th style="width:100px">Apellido</th>' +
                             '<th style="width:100px">Correo Acudiente</th>' +
                             '<th style="width:100px">Nombre Acudiente</th>' +
-                            '<th style="width:100px">curso</th>' +
+                            '<th style="width:100px">Curso</th>' +
+                            '<th style="width:100px">Nota</th>' +
+                            '<th style="width:100px">Gráfico</th>' +                            
+                            '<th style="width:100px">PDF</th>' +                            
+                            '<th style="width:100px">Editar</th>' +                            
+                            '<th style="width:100px">Borrar</th>' +
                             '</tr>'
                             );
 
                     for (var i in inventario) {
                         $("#tabla1").append(
                                 '<tr>' +
-                                '<td style="width:80px">' + inventario[i].id + '</td>' +
+                                '<td style="width:100px">' + inventario[i].id + '</td>' +
                                 '<td style="width:100px">' + inventario[i].nombre + '</td>' +
                                 '<td style="width:100px">' + inventario[i].apellido + '</td>' +
                                 '<td style="width:100px">' + inventario[i].correoAcudiente + '</td>' +
                                 '<td style="width:100px">' + inventario[i].nombreAcudiente + '</td>' +
                                 '<td style="width:100px">' + inventario[i].curso + '</td>' +
-                                '< td >' + '< input type = "number" id = "nota"  placeholder = "Ingrese la Nota" / >' + '< /td>' +
+                                '<td style="width:100px"> <input type = "number" id = "nota-'+ inventario[i].id+'" /></td>' +                               
+                                '<td style="width:100px"> <input type="button" id = "bt-'+ inventario[i].id+'" value="Grafico"></td>' +
+                                '<td style="width:100px"> <input type="button" id = "bt-'+ inventario[i].id+'" value="Pdf"></td>' +
+                                '<td style="width:100px"> <input type="button" id = "bt-'+ inventario[i].id+'" value="Editar"></td>' +
+                                '<td style="width:100px"> <input type="button" id = "bt-'+ inventario[i].id+'" value="Borrar"></td>' +
                                 '</tr>'
                                 );
                     }
@@ -142,44 +151,14 @@
                                     <span>Estudiantes</span>
                                 </a>
                             </li>
-                            <li class="active">
-                                <a href="Estudiantes_Listar.htm">
-                                    <span>Listar Estudiantes</span>
-                                </a>
-                            </li>
                             <li>
-                                <a href="Estudiantes_Actualizar.htm">
-                                    <span>Actualizar Estudiantes</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="Estudiantes_Crear.htm">
-                                    <span>Crear Estudiantes</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="Estudiantes_Borrar.htm">
-                                    <span>Borrar Estudiantes</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="Cursos.htm">
+                                <a href="Cursos_Listar.htm">
                                     <span>Cursos</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="Horario.htm">
-                                    <span>Horario</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="Datos_Personales.htm">
                                     <span>Datos Personales</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="Contactenos.htm">
-                                    <span>Contáctenos</span>
                                 </a>
                             </li>
                         </ul>
@@ -239,9 +218,14 @@
                             <div style="text-align: center" id="informaciontablas">  
                                 <h1 id="tituloInventario">Estudiantes</h1>         
                                 <br>
-                                <table border="2" id="tabla1">
+                                <table style="border:none" border="2" id="tabla1">
 
-                                </table>         
+                                </table> 
+                                
+                                
+                                <a>Oscar aqui va el boton</a>
+                                
+                                
                             </div>
 
                         </section>

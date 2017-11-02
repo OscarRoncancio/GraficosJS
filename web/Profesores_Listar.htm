@@ -34,7 +34,7 @@
           <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
         <script>
-            window.onload =(function () {
+            window.onload = (function () {
                 var parametros = {
                     "hidden": "1"
                 };
@@ -50,13 +50,17 @@
                     $("#tabla1").show();
                     $("#tabla1").empty();
                     $("#tabla1").append(
-                                '<tr>' +
-                                '<th style="width:80px">Cedula</th>' +
-                                '<th style="width:100px">Nombre</th>' +
-                                '<th style="width:100px">Apellido</th>' +
-                                '<th style="width:100px">Usuario</th>' +
-                                '</tr>'
-                                );
+                            '<tr>' +
+                            '<th style="width:80px">Cedula</th>' +
+                            '<th style="width:100px">Nombre</th>' +
+                            '<th style="width:100px">Apellido</th>' +
+                            '<th style="width:100px">Usuario</th>' +
+                            '<th style="width:100px">Gráfico</th>' +
+                            '<th style="width:100px">PDF</th>' +
+                            '<th style="width:100px">Editar</th>' +
+                            '<th style="width:100px">Borrar</th>' +
+                            '</tr>'
+                            );
                     for (var i in inventario) {
                         $("#tabla1").append(
                                 '<tr>' +
@@ -64,6 +68,10 @@
                                 '<td style="width:100px">' + inventario[i].nombre + '</td>' +
                                 '<td style="width:100px">' + inventario[i].apellido + '</td>' +
                                 '<td style="width:100px">' + inventario[i].usuario + '</td>' +
+                                '<td style="width:100px"> <input type="button" id = "bt-' + inventario[i].cedula + '" value="Grafico"></td>' +
+                                '<td style="width:100px"> <input type="button" id = "bt-' + inventario[i].cedula + '" value="Pdf"></td>' +
+                                '<td style="width:100px"> <input type="button" id = "bt-' + inventario[i].cedula + '" value="Editar"></td>' +
+                                '<td style="width:100px"> <input type="button" id = "bt-' + inventario[i].cedula + '" value="Borrar"></td>' +
                                 '</tr>'
                                 );
                     }
@@ -129,53 +137,23 @@
                                 </a>
                             </li>
                             <li class="active">
-                                <a href="Profesores.htm">
+                                <a href="Profesores_Listar.htm">
                                     <span>Profesores</span>
                                 </a>
                             </li>
-                            <li class="active">
-                                <a href="Profesores_Listar.htm">
-                                    <span>Listar Profesores</span>
-                                </a>
-                            </li>
                             <li>
-                                <a href="Profesores_Actualizar.htm">
-                                    <span>Actualizar Profesor</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="Profesores_Crear.htm">
-                                    <span>Crear Profesor</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="Profesores_Borrar.htm">
-                                    <span>Borrar Profesor</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="Estudiantes.htm">
+                                <a href="Estudiantes_Listar.htm">
                                     <span>Estudiantes</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="Cursos.htm">
+                                <a href="Cursos_Listar.htm">
                                     <span>Cursos</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="Horario.htm">
-                                    <span>Horario</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="Datos_Personales.htm">
                                     <span>Datos Personales</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="Contactenos.htm">
-                                    <span>Contáctenos</span>
                                 </a>
                             </li>
                         </ul>
@@ -242,7 +220,7 @@
 
                                 </table>         
                             </div>
-                            
+
                         </section>
                     </div>
 
@@ -302,15 +280,15 @@
         </div>
 
 
-    <script type='text/javascript' src="js/jquery-2.1.3.js"></script>
-    <script type='text/javascript' src="assets/js/visuallightbox.js"></script>
-    <script type='text/javascript' src="assets/js/vlbdata.js"></script>
-    <script type="text/javascript" src="assets/js/wowslider.js"></script>
-    <script type="text/javascript" src="assets/js/wowslider-gallery.js"></script>
-    <script type="text/javascript" src="assets/js/script.js"></script>
-    <script type="text/javascript" src="assets/js/script-gallery.js"></script>
-    <script type='text/javascript' src="js/app.js"></script>
+        <script type='text/javascript' src="js/jquery-2.1.3.js"></script>
+        <script type='text/javascript' src="assets/js/visuallightbox.js"></script>
+        <script type='text/javascript' src="assets/js/vlbdata.js"></script>
+        <script type="text/javascript" src="assets/js/wowslider.js"></script>
+        <script type="text/javascript" src="assets/js/wowslider-gallery.js"></script>
+        <script type="text/javascript" src="assets/js/script.js"></script>
+        <script type="text/javascript" src="assets/js/script-gallery.js"></script>
+        <script type='text/javascript' src="js/app.js"></script>
 
 
-</body>
+    </body>
 </html>
