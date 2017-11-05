@@ -12,7 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -114,6 +113,32 @@ public class Admins implements IBaseDatos<Admin> {
 //        return cur2;
 //    }
     
+     public Admin buscarNombre(String nom1) {
+        Admin e = null;
+        boolean r = false;
+        this.query = "select * from Admin where nombre = \"" + nom1+"\"";
+        try {
+            // create the java statement
+            Statement st = this.connection.createStatement();
+            // execute the query, and get a java resultset
+            ResultSet rs = st.executeQuery(this.query);
+            // iterate through the java resultset
+            while (rs.next()) {
+                String id2 = rs.getString("cedula");
+                String nom = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                String usu = rs.getString("usuario");
+                e = new Admin(id2, nom, apellido, null);
+            }
+            st.close();
+        } catch (SQLException ex) {
+            // TODO Auto-generated catch block
+            System.out.println("Failed to make update!");
+            ex.printStackTrace();
+        }
+        return e;
+    }
+
     public void disconect() throws SQLException {
         this.connection.close();
     }

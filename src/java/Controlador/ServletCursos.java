@@ -5,7 +5,6 @@
  */
 package Controlador;
 
-import DB.Cursos;
 import DB.*;
 import Modelo.*;
 import com.google.gson.Gson;
@@ -44,7 +43,7 @@ public class ServletCursos extends HttpServlet {
         }
 
         int hacer = Integer.parseInt(request.getParameter("hidden").trim());
-        if (hacer == 1) {
+        if (hacer == 1) { // todoslos cursos
             ArrayList p = (ArrayList) this.cur.findAll();
             String json = new Gson().toJson(p);
             response.setContentType("application/json");
@@ -56,7 +55,12 @@ public class ServletCursos extends HttpServlet {
             } catch (Exception e) {
                 id=0;
             }
-            Curso c = this.cur.buscar(id);
+            Curso c=null;
+            try {
+                c = this.cur.buscar(id);
+            } catch (URISyntaxException ex) {
+                Logger.getLogger(ServletCursos.class.getName()).log(Level.SEVERE, null, ex);
+            }
             String json = new Gson().toJson(c);
             response.setContentType("application/json");
             response.getWriter().write(json);
@@ -77,24 +81,23 @@ public class ServletCursos extends HttpServlet {
                 Logger.getLogger(ServletEstudiantes.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        int id = 0, profesor = 0;
-        String nombre = " ";
+        int id = 0;
+        String nombre = " ",profesor = "";
         int hacer = Integer.parseInt(request.getParameter("hidden").trim());
         if (hacer == 1) {//nuevo curso
             // Obtengo los datos de la peticion
             try {
                 nombre = request.getParameter("nombre").trim();
                 id = Integer.parseInt(request.getParameter("id").trim());
-                profesor = Integer.parseInt(request.getParameter("profesor").trim());
+                profesor = request.getParameter("profesor").trim();
             } catch (Exception e) {
                 id = 0;
-                profesor = 0;
+                profesor = "";
             }
-            // Compruebo que los campos del formulario tienen datos para a�adir a la tabla
-            if (!nombre.equals("") && profesor != 0 && id != 0) {
-
+            // Compruebo que los campos del formulario tienen datos para anadir a la tabla
+            if (!nombre.equals("") && profesor.length() != 0 && id != 0) {
                 if (prof.buscar(profesor) != null) {
-                    Curso c = new Curso(id, nombre, profesor);
+                    Curso c = new Curso(id, nombre, prof.buscar(profesor));
                     boolean a = this.cur.insert(c);
                     if (a) {
                         response.setContentType("application/json");
@@ -119,7 +122,12 @@ public class ServletCursos extends HttpServlet {
                 error = true;
             }
             if (!error) {
-                Curso e = this.cur.buscar(id);
+                Curso e=null;
+                try {
+                    e = this.cur.buscar(id);
+                } catch (URISyntaxException ex) {
+                    Logger.getLogger(ServletCursos.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 boolean hecho = this.cur.delete(e);
                 if (hecho) {
                     response.getWriter().write("curso borrado correctamente");

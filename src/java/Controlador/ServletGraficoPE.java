@@ -6,19 +6,22 @@
 package Controlador;
 
 import DB.ConeccionGrafico;
+import DB.Notas;
 import Modelo.Nota;
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 
 /**
  *
@@ -26,43 +29,27 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ServletGraficoPE", urlPatterns = {"/ServletGraficoPE"})
 public class ServletGraficoPE extends HttpServlet {
-
+    private Notas notas;
+    
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        ArrayList<Nota> notas = new ArrayList();
-        ConeccionGrafico conec = new ConeccionGrafico();
-        Connection con = conec.getConexion();
-        Nota n = null;
-        ResultSet rs = null;
-        PreparedStatement ps = null;
-
-        try {
-
-            ps = con.prepareStatement("select Estudiante.id,Estudiante.nombre,Nota.materia,Nota.valor from Nota inner join Estudiante where Estudiante.id = 2  &&  Estudiante.id = Nota.id_est");
-            rs = ps.executeQuery();
-
-            while (rs.next()) {
-
-                n = new Nota(rs.getString(3), rs.getInt(4));
-                notas.add(n);
-
+        if (notas == null) {
+            try {
+                this.notas = new Notas();
+            } catch (URISyntaxException ex) {
+                Logger.getLogger(ServletCursos.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            int hacer = Integer.parseInt(request.getParameter("hidden").trim());
-            if (hacer == 1) {
-                notas = (ArrayList) notas;
-                String json = new Gson().toJson(notas);
-                response.setContentType("application/json");
-                response.getWriter().write(json);
-            }
-            ps.close();
-            rs.close();
-            conec.desconectar();
-
-        } catch (Exception ex) {
         }
-
+        
+        int hacer = Integer.parseInt(request.getParameter("hidden").trim());
+        if (hacer == 1) {
+            String id = request.getParameter("id").trim();
+            ArrayList<Nota> n =(ArrayList<Nota>) this.notas.buscarIdEstudiante(id);
+            String json = new Gson().toJson(n);
+            response.setContentType("application/json");
+            response.getWriter().write(json);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

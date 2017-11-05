@@ -44,6 +44,12 @@ public class ServletProfesores extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Usuarios usu=null;
+        try {
+            usu=new Usuarios();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(ServletProfesores.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if (profesores == null) {
             try {
                 this.profesores = new Profesores();
@@ -51,23 +57,23 @@ public class ServletProfesores extends HttpServlet {
                 Logger.getLogger(ServletEstudiantes.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        int cedula = 0;
+        String cedula = "";
         String nombre = "", apellido = "", usuario="";
         int hacer = Integer.parseInt(request.getParameter("hidden").trim());
         if (hacer == 1) {//nuevo profesor
             // Obtengo los datos de la peticion
             try {
-                cedula = Integer.parseInt(request.getParameter("cedula").trim());
+                cedula = request.getParameter("cedula").trim();
                 nombre = request.getParameter("nombre").trim();
                 apellido = request.getParameter("apellido").trim();
                 usuario = request.getParameter("usuario").trim();
             } catch (Exception e) {
-                cedula = 0;
+                cedula = "";
             }
             // Compruebo que los campos del formulario tienen datos para a�adir a la tabla
-            if (!nombre.equals("") && !apellido.equals("") && cedula != 0) {
+            if (!nombre.equals("") && !apellido.equals("") && cedula.length() != 0) {
                 // Creo el objeto persona y lo a�ado al arrayList
-               Profesor p = new Profesor(cedula, nombre, apellido, usuario);
+               Profesor p = new Profesor(cedula, nombre, apellido, usu.buscar2(usuario));
                 boolean a = this.profesores.insert(p);
                 if (a) {
                     response.setContentType("application/json");
@@ -83,7 +89,7 @@ public class ServletProfesores extends HttpServlet {
         }else if (hacer == 3) {
             boolean error = false;
             try {
-                cedula = Integer.parseInt(request.getParameter("id").trim());
+                cedula = request.getParameter("id").trim();
             } catch (Exception e) {
                 error = true;
             }

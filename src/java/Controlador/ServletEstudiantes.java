@@ -5,8 +5,8 @@
  */
 package Controlador;
 
-import DB.Estudiantes;
-import Modelo.Estudiante;
+import DB.*;
+import Modelo.*;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -80,31 +80,34 @@ public class ServletEstudiantes extends HttpServlet {
         if (estudiantes == null) {
             this.estudiantes = new ArrayList();
         }
+        Cursos cursos=null;
         if (est == null) {
             try {
                 this.est = new Estudiantes();
+                cursos=new Cursos();
             } catch (URISyntaxException ex) {
                 Logger.getLogger(ServletEstudiantes.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        int id = 0, curso = 0;
+        String id = "";
+        Curso curso = null;
         String nombre = "", apellido = "", correoAcudiente = "", nombreAcudiente = "";
         int hacer = Integer.parseInt(request.getParameter("hidden").trim());
         if (hacer == 1) {//nuevo estudiante
             // Obtengo los datos de la peticion
             try {
-                id = Integer.parseInt(request.getParameter("id").trim());
+                id = request.getParameter("id").trim();
                 nombre = request.getParameter("nombre").trim();
                 apellido = request.getParameter("apellido").trim();
                 correoAcudiente = request.getParameter("correoAcudiente").trim();
                 nombreAcudiente = request.getParameter("nombreAcudiente").trim();
-                curso = Integer.parseInt(request.getParameter("curso").trim());
+                curso =cursos.buscar(Integer.parseInt(request.getParameter("curso").trim()));
             } catch (Exception e) {
-                id = 0;
-                curso = 0;
+                id = "";
+                curso = null;
             }
             // Compruebo que los campos del formulario tienen datos para a�adir a la tabla
-            if (!nombre.equals("") && !apellido.equals("") && id != 0) {
+            if (!nombre.equals("") && !apellido.equals("") && id.length() != 0) {
                 // Creo el objeto persona y lo a�ado al arrayList
                 Estudiante est = new Estudiante(id, nombre, apellido, correoAcudiente, nombreAcudiente, curso);
                 boolean a = this.est.insert(est);
@@ -123,8 +126,8 @@ public class ServletEstudiantes extends HttpServlet {
         } else if (hacer == 2) {//asignar curso
             boolean error = false;
             try {
-                id = Integer.parseInt(request.getParameter("id").trim());
-                curso = Integer.parseInt(request.getParameter("curso").trim());
+                id = request.getParameter("id").trim();
+               curso =cursos.buscar(Integer.parseInt(request.getParameter("curso").trim()));
             } catch (Exception e) {
                 error = true;
             }
@@ -143,7 +146,7 @@ public class ServletEstudiantes extends HttpServlet {
         }else if (hacer == 3) { // borrar Estudiante
             boolean error = false;
             try {
-                id = Integer.parseInt(request.getParameter("id").trim());
+                id = request.getParameter("id").trim();
             } catch (Exception e) {
                 error = true;
             }

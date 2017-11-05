@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -33,6 +35,15 @@ public class Materias implements IBaseDatos<Materia> {
     @Override
     public List<Materia> findAll() {
         ArrayList<Materia> mat = new ArrayList();
+        Profesores prof = null;
+        Cursos cur=null;
+        try {
+            prof=new Profesores();
+            cur=new Cursos();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Materias.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         this.query = "select * from Materias ";
         try {
             // create the java statement
@@ -43,8 +54,8 @@ public class Materias implements IBaseDatos<Materia> {
             while (rs.next()) {
                 int id2 = rs.getInt("id");
                 String nom = rs.getString("nombre");
-                int profesor = rs.getInt("profesor");
-                int curso = rs.getInt("curso");
+                Profesor profesor = prof.buscar(rs.getString("profesor"));
+                Curso curso = cur.buscar(rs.getInt("curso"));
                 int inth = rs.getInt("intHoraria");
                 Materia e = new Materia(id2, nom, profesor, curso, inth);
                 mat.add(e);
@@ -54,6 +65,8 @@ public class Materias implements IBaseDatos<Materia> {
             // TODO Auto-generated catch block
             System.out.println("Failed to make update!");
             ex.printStackTrace();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Materias.class.getName()).log(Level.SEVERE, null, ex);
         }
         return mat;
     }
@@ -69,7 +82,7 @@ public class Materias implements IBaseDatos<Materia> {
             preparedStmt = connection.prepareStatement(query);
             preparedStmt.setInt(1, a.getId());
             preparedStmt.setString(2, a.getNombre().trim());
-            preparedStmt.setInt(3, a.getCurso());
+            preparedStmt.setInt(3, a.getCurso().getId());
             preparedStmt.setInt(4, a.getIntHoraria());
             // execute the preparedstatement
             preparedStmt.execute();
@@ -93,8 +106,8 @@ public class Materias implements IBaseDatos<Materia> {
                 query = "update Profesor set nombre=?,profesor=?,curso=?,intHoraria=? where id= ?";
                 preparedStmt = connection.prepareStatement(query);
                 preparedStmt.setString(1, a.getNombre().trim());
-                preparedStmt.setInt(2, a.getProfesor());
-                preparedStmt.setInt(3, a.getCurso());
+                preparedStmt.setString(2, a.getProfesor().getCedula());
+                preparedStmt.setInt(3, a.getCurso().getId());
                 preparedStmt.setInt(4, a.getIntHoraria());
                 preparedStmt.setInt(4, a.getId());
                 // execute the java preparedstatement
@@ -127,6 +140,16 @@ public class Materias implements IBaseDatos<Materia> {
     }
 
     public Materia buscar(int id) {
+        
+         Profesores prof = null;
+        Cursos cur=null;
+        try {
+            prof=new Profesores();
+            cur=new Cursos();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Materias.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         Materia e = null;
         boolean r = false;
         this.query = "select * from Materia where id = " + id;
@@ -139,10 +162,10 @@ public class Materias implements IBaseDatos<Materia> {
             while (rs.next()) {
                 int id2 = rs.getInt("id");
                 String nom = rs.getString("nombre");
-                int prof = rs.getInt("profesor");
-                int cursos = rs.getInt("cursos");
+                Profesor profesor = prof.buscar(rs.getString("profesor"));
+                Curso cursos = cur.buscar(rs.getInt("cursos"));
                 int inthor = rs.getInt("intHoraria");
-                e = new Materia(id, nom, prof, cursos, inthor);
+                e = new Materia(id2, nom, profesor, cursos, inthor);
                 break;
             }
             st.close();
@@ -150,6 +173,8 @@ public class Materias implements IBaseDatos<Materia> {
             // TODO Auto-generated catch block
             System.out.println("Failed to make update!");
             ex.printStackTrace();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Materias.class.getName()).log(Level.SEVERE, null, ex);
         }
         return e;
     }

@@ -12,11 +12,11 @@ package Modelo;
 public class Materia {
     private int id;
     private String nombre;
-    private int profesor;
-    private int curso;
+    private Profesor profesor;
+    private Curso curso;
     private int intHoraria;
 
-    public Materia(int id, String nombre, int profesor, int curso, int intHoraria) {
+    public Materia(int id, String nombre, Profesor profesor, Curso curso, int intHoraria) {
         this.id = id;
         this.nombre = nombre;
         this.profesor = profesor;
@@ -40,19 +40,19 @@ public class Materia {
         this.nombre = nombre;
     }
 
-    public int getProfesor() {
+    public Profesor getProfesor() {
         return profesor;
     }
 
-    public void setProfesor(int profesor) {
+    public void setProfesor(Profesor profesor) {
         this.profesor = profesor;
     }
 
-    public int getCurso() {
+    public Curso getCurso() {
         return curso;
     }
 
-    public void setCurso(int curso) {
+    public void setCurso(Curso curso) {
         this.curso = curso;
     }
 
@@ -63,5 +63,6 @@ public class Materia {
     public void setIntHoraria(int intHoraria) {
         this.intHoraria = intHoraria;
     }
+
     
 }

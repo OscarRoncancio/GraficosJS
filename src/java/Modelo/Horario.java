@@ -11,12 +11,12 @@ package Modelo;
  */
 public class Horario {
     private int id;
-    private String materia;
+    private Materia materia;
     private int dia;
     private int hinicio;
     private int hfin;
 
-    public Horario(int id, String materia, int dia, int hinicio, int hfin) {
+    public Horario(int id, Materia materia, int dia, int hinicio, int hfin) {
         this.id = id;
         this.materia = materia;
         this.dia = dia;
@@ -32,11 +32,11 @@ public class Horario {
         this.id = id;
     }
 
-    public String getMateria() {
+    public Materia getMateria() {
         return materia;
     }
 
-    public void setMateria(String materia) {
+    public void setMateria(Materia materia) {
         this.materia = materia;
     }
 

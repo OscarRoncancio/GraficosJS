@@ -1,11 +1,10 @@
-
-
 window.onload = function () {
     var ctx = document.getElementById("graficoTE");
     var myBarChart;
 
     var parametros = {
-        "hidden": "1"
+        "hidden": "1",
+        "id": "123456"
     };
     $.ajax({
 

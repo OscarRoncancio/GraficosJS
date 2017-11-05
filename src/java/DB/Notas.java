@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
+ *
  * @author willy
  */
 public class Notas implements IBaseDatos<Nota> {
@@ -42,12 +42,12 @@ public class Notas implements IBaseDatos<Nota> {
             // iterate through the java resultset
             while (rs.next()) {
                 int id2 = rs.getInt("id");
-                int est= rs.getInt("estudiante");
                 String materia = rs.getString("materia");
                 int valor = rs.getInt("valor");
                 int periodo = rs.getInt("periodo");
                 String observacion = rs.getString("observacion");
-                Nota e = new Nota(id2, est, materia, valor, periodo, observacion);
+                String est = rs.getString("id_est");
+                Nota e = new Nota(id2, materia, valor, periodo, observacion, est);
                 mat.add(e);
             }
             st.close();
@@ -64,16 +64,16 @@ public class Notas implements IBaseDatos<Nota> {
         boolean r = false;
         try {
             // the mysql insert statement
-            query = " insert into Nota (id,estudiante,materia,valor,periodo,observacion)"
+            query = " insert into Nota (id,materia,valor,periodo,observacion,id_est)"
                     + " values (?, ?, ?, ?, ?, ?);";
             // create the mysql insert preparedstatement
             preparedStmt = connection.prepareStatement(query);
             preparedStmt.setInt(1, a.getId());
-            preparedStmt.setInt(2, a.getEstudiante());
-            preparedStmt.setString(3, a.getMateria().trim());
-            preparedStmt.setInt(4, a.getValor());
-            preparedStmt.setInt(5, a.getPeriodo());
-            preparedStmt.setString(6, a.getObservacion().trim());
+            preparedStmt.setString(2, a.getMateria().trim());
+            preparedStmt.setInt(3, a.getValor());
+            preparedStmt.setInt(4, a.getPeriodo());
+            preparedStmt.setString(5, a.getObservacion().trim());
+            preparedStmt.setString(6, a.getId_est().trim());
             // execute the preparedstatement
             preparedStmt.execute();
             System.out.println("You made it, the insertion is ok!");
@@ -93,13 +93,13 @@ public class Notas implements IBaseDatos<Nota> {
             try {
                 //Update
                 // create the java mysql update preparedstatement
-                query = "update Nota set estudiante = ?, materia=?, valor=?, periodo=?, observacion=? where id = ?";
+                query = "update Nota set materia=?, valor=?, periodo=?, observacion=?, id_est where id = ?";
                 preparedStmt = connection.prepareStatement(query);
-                preparedStmt.setInt(1, a.getEstudiante());
-                preparedStmt.setString(2, a.getMateria().trim());
-                preparedStmt.setInt(3, a.getValor());
-                preparedStmt.setInt(4, a.getPeriodo());
-                preparedStmt.setString(5, a.getObservacion());
+                preparedStmt.setString(1, a.getMateria().trim());
+                preparedStmt.setInt(2, a.getValor());
+                preparedStmt.setInt(3, a.getPeriodo());
+                preparedStmt.setString(4, a.getObservacion().trim());
+                preparedStmt.setString(5, a.getId_est().trim());
                 preparedStmt.setInt(6, a.getId());
                 // execute the java preparedstatement
                 preparedStmt.executeUpdate();
@@ -142,12 +142,12 @@ public class Notas implements IBaseDatos<Nota> {
             // iterate through the java resultset
             while (rs.next()) {
                 int id2 = rs.getInt("id");
-                int estudiante = rs.getInt("estudiante");
                 String materia = rs.getString("materia");
                 int valor = rs.getInt("valor");
                 int periodo = rs.getInt("periodo");
-                String observacion = rs.getString("observaciones");
-                e = new Nota(id, estudiante, materia, valor, periodo, observacion);
+                String observacion = rs.getString("observacion");
+                String est = rs.getString("id_est");
+                e = new Nota(id2, materia, valor, periodo, observacion, est);
             }
             st.close();
         } catch (SQLException ex) {
@@ -156,6 +156,34 @@ public class Notas implements IBaseDatos<Nota> {
             ex.printStackTrace();
         }
         return e;
+    }
+
+    public ArrayList<Nota> buscarIdEstudiante(String id) {
+        ArrayList<Nota> mat = new ArrayList();
+        this.query = "select * from Nota where id_est = '" + id+"'";
+        try {
+            // create the java statement
+            Statement st = this.connection.createStatement();
+            // execute the query, and get a java resultset
+            ResultSet rs = st.executeQuery(this.query);
+            // iterate through the java resultset
+            while (rs.next()) {
+                int id2 = rs.getInt("id");
+                String materia = rs.getString("materia");
+                int valor = rs.getInt("valor");
+                int periodo = rs.getInt("periodo");
+                String observacion = rs.getString("observacion");
+                String est = rs.getString("id_est");
+                Nota e = new Nota(id2, materia, valor, periodo, observacion, est);
+                mat.add(e);
+            }
+            st.close();
+        } catch (SQLException ex) {
+            // TODO Auto-generated catch block
+            System.out.println("Failed to make update!");
+            ex.printStackTrace();
+        }
+        return mat;
     }
 
     public void disconect() throws SQLException {

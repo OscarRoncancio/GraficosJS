@@ -5,7 +5,7 @@
  */
 package DB;
 
-import Modelo.Curso;
+import Modelo.*;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,12 +14,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author willy
  */
-public class Cursos implements IBaseDatos<Curso>{
+public class Cursos implements IBaseDatos<Curso> {
 
     private PreparedStatement preparedStmt;
     private Connection connection;
@@ -29,10 +31,10 @@ public class Cursos implements IBaseDatos<Curso>{
         DbConnection c = new DbConnection();
         this.connection = c.getConnection();
     }
-    
-     @Override
+
+    @Override
     public boolean insert(Curso a) {
-         boolean r = false;
+        boolean r = false;
         try {
             // the mysql insert statement
             query = " insert into Cursos (id,nombre,profesor)"
@@ -41,7 +43,7 @@ public class Cursos implements IBaseDatos<Curso>{
             preparedStmt = connection.prepareStatement(query);
             preparedStmt.setInt(1, a.getId());
             preparedStmt.setString(2, a.getNombre().trim());
-            preparedStmt.setInt(3, a.getProfesor());
+            preparedStmt.setString(3, a.getProfesor().getCedula());
             // execute the preparedstatement
             preparedStmt.execute();
             System.out.println("You made it, the insertion is ok!");
@@ -56,24 +58,28 @@ public class Cursos implements IBaseDatos<Curso>{
 
     @Override
     public boolean update(Curso a) {
-         boolean r = false;
-        if (buscar(a.getId()) != null) {
-            try {
-                //Update
-                // create the java mysql update preparedstatement
-                query = "update Cursos set nombre = ?, profesor=? where id = ?";
-                preparedStmt = connection.prepareStatement(query);
-                preparedStmt.setString(1,a.getNombre());
-                preparedStmt.setInt(2,a.getProfesor());
-                preparedStmt.setInt(3, a.getId());
-                // execute the java preparedstatement
-                preparedStmt.executeUpdate();
-                r = true;
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                System.out.println("Failed to make update!");
-                e.printStackTrace();
+        boolean r = false;
+        try {
+            if (buscar(a.getId()) != null) {
+                try {
+                    //Update
+                    // create the java mysql update preparedstatement
+                    query = "update Cursos set nombre = ?, profesor=? where id = ?";
+                    preparedStmt = connection.prepareStatement(query);
+                    preparedStmt.setString(1, a.getNombre());
+                    preparedStmt.setString(2, a.getProfesor().getCedula());
+                    preparedStmt.setInt(3, a.getId());
+                    // execute the java preparedstatement
+                    preparedStmt.executeUpdate();
+                    r = true;
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    System.out.println("Failed to make update!");
+                    e.printStackTrace();
+                }
             }
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Cursos.class.getName()).log(Level.SEVERE, null, ex);
         }
         return r;
     }
@@ -88,7 +94,7 @@ public class Cursos implements IBaseDatos<Curso>{
             this.preparedStmt.execute();
             System.out.println(" se borro corectamente \n\n ");
             //actualizamos la info de los estudiantes que pertenecian al curso 
-            this.query = "update Estudiante set curso = null where curso = "+t.getId();
+            this.query = "update Estudiante set curso = null where curso = " + t.getId();
             this.preparedStmt = connection.prepareStatement(query);
             this.preparedStmt.executeUpdate();
             hecho = true;
@@ -99,9 +105,10 @@ public class Cursos implements IBaseDatos<Curso>{
         }
         return hecho;
     }
-    
-    public Curso buscar(int id) {
+
+    public Curso buscar(int id) throws URISyntaxException {
         Curso e = null;
+        Profesores p = new Profesores();
         this.query = "select * from Curso where id = " + id;
         try {
             // create the java statement
@@ -112,7 +119,7 @@ public class Cursos implements IBaseDatos<Curso>{
             while (rs.next()) {
                 int id2 = rs.getInt("id");
                 String nom = rs.getString("nombre");
-                int prof= rs.getInt("profesor");
+                Profesor prof = p.buscar(rs.getString("profesor"));
                 e = new Curso(id, nom, prof);
             }
             st.close();
@@ -123,10 +130,16 @@ public class Cursos implements IBaseDatos<Curso>{
         }
         return e;
     }
-    
+
     @Override
     public List<Curso> findAll() {
-         ArrayList<Curso> cur2 = new ArrayList();
+        Profesores p =null;
+        try {
+            p= new Profesores();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Cursos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ArrayList<Curso> cur2 = new ArrayList();
         this.query = "select * from Cursos ";
         try {
             // create the java statement
@@ -137,8 +150,8 @@ public class Cursos implements IBaseDatos<Curso>{
             while (rs.next()) {
                 int id2 = rs.getInt("id");
                 String nom = rs.getString("nombre");
-                int profesor = rs.getInt("profesor");
-                Curso e = new Curso(id2, nom, profesor);
+                Profesor prof = p.buscar(rs.getString("profesor"));
+                Curso e = new Curso(id2, nom, prof);
                 cur2.add(e);
             }
             st.close();
@@ -159,10 +172,8 @@ public class Cursos implements IBaseDatos<Curso>{
         }
         return cur2;
     }
-    
-    
-    
-     public void disconect() throws SQLException {
+
+    public void disconect() throws SQLException {
         this.connection.close();
     }
 

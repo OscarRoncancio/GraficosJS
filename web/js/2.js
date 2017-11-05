@@ -4,7 +4,8 @@ window.onload = function () {
     var ctx = document.getElementById("popChart1");
     var myBarChart;
     var parametros = {
-        "hidden": "1"
+        "hidden": "1",
+        "id": "2"
     };
     $.ajax({
 
@@ -12,12 +13,19 @@ window.onload = function () {
         url: "ServletGraficoPE",
         type: "GET"
 
-
     }).done(function (response) {
         console.log(response);
         var inventario = response;
+        var arreglo=[];
         var arreglo1 = [];
-        arreglo1.push([inventario[0].valor, inventario[1].valor, inventario[2].valor]);
+        var arreglo2 = [];
+        var arreglo3 = [];
+        for (var i = 0; i < inventario.length; i++) {
+            arreglo.push(inventario[i].valor);
+            arreglo2.push(inventario[i].materia);
+        }
+        arreglo3.push(arreglo2);
+        arreglo1.push(arreglo);
 //        $("#btn1").click(function () {
 //            $("p").append(" <b>" + arreglo1[0] + "</b>");
 //        });
@@ -25,7 +33,7 @@ window.onload = function () {
             type: 'bar',
             data: {
                 borderSkipped: 'left',
-                labels: ["español", "matematicas", "matematica"],
+                labels: arreglo3[0],
                 datasets: [{
                         label: 'notas',
                         data: arreglo1[0],

@@ -12,25 +12,19 @@ package Modelo;
 public class Nota {
 
     private int id;
-    private int estudiante;
     private String materia;
     private int valor;
     private int periodo;
     private String observacion;
+    private String id_est;
 
-    public Nota(int id, int estudiante, String materia, int valor, int periodo, String observacion) {
+    public Nota(int id, String materia, int valor, int periodo, String observacion, String id_est) {
         this.id = id;
-        this.estudiante = estudiante;
         this.materia = materia;
         this.valor = valor;
         this.periodo = periodo;
         this.observacion = observacion;
-    }
-    public Nota(String materia, int valor) {
-
-        this.materia = materia;
-        this.valor = valor;
-        
+        this.id_est = id_est;
     }
 
     public int getId() {
@@ -39,14 +33,6 @@ public class Nota {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getEstudiante() {
-        return estudiante;
-    }
-
-    public void setEstudiante(int estudiante) {
-        this.estudiante = estudiante;
     }
 
     public String getMateria() {
@@ -80,6 +66,15 @@ public class Nota {
     public void setObservacion(String observacion) {
         this.observacion = observacion;
     }
+
+    public String getId_est() {
+        return id_est;
+    }
+
+    public void setId_est(String id_est) {
+        this.id_est = id_est;
+    }
+
     
     
 }

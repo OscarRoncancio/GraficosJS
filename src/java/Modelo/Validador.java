@@ -11,7 +11,7 @@ public class Validador {
         char[] cadena = $cadena.toLowerCase().toCharArray();
 
         //Compruebo la longitud
-        if (cadena.length <= 6) {
+        if (cadena.length <= 3) {
             return false;
         }
         for (int i = 0; i < cadena.length; i++) {
@@ -20,7 +20,6 @@ public class Validador {
                     || cadena[i] == '='
                     || cadena[i] == '?'
                     || cadena[i] == '+'
-                    || cadena[i] == '*'
                     || cadena[i] == '-'
                     || cadena[i] == '%'
                     || cadena[i] == '/'

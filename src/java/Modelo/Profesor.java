@@ -10,23 +10,23 @@ package Modelo;
  * @author willy
  */
 public class Profesor {
-    private int cedula;
+    private String cedula;
     private String nombre;
     private String apellido;
-    private String usuario;
+    private Usuario usuario;
 
-    public Profesor(int cedula, String nombre, String apellido, String usuario) {
+    public Profesor(String cedula, String nombre, String apellido, Usuario usuario) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
         this.usuario = usuario;
     }
 
-    public int getCedula() {
+    public String getCedula() {
         return cedula;
     }
 
-    public void setCedula(int cedula) {
+    public void setCedula(String cedula) {
         this.cedula = cedula;
     }
 
@@ -46,11 +46,11 @@ public class Profesor {
         this.apellido = apellido;
     }
 
-    public String getUsuario() {
+    public Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(String usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 

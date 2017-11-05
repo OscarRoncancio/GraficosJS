@@ -5,11 +5,13 @@
  */
 package DB;
 
-import Modelo.Estudiante;
+import Modelo.*;
 import java.net.URISyntaxException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -29,6 +31,12 @@ public class Estudiantes implements IBaseDatos<Estudiante> {
     @Override
     public List<Estudiante> findAll() {
         ArrayList<Estudiante> est = new ArrayList();
+        Cursos cursos=null;
+        try {
+            cursos= new Cursos();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Estudiantes.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.query = "select * from Estudiante ";
         try {
             // create the java statement
@@ -37,12 +45,12 @@ public class Estudiantes implements IBaseDatos<Estudiante> {
             ResultSet rs = st.executeQuery(this.query);
             // iterate through the java resultset
             while (rs.next()) {
-                int id2 = rs.getInt("id");
+                String id2 = rs.getString("id");
                 String nom = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
                 String correoacu = rs.getString("correoAcudiente");
                 String nombreacu = rs.getString("nombreAcudiente");
-                int curso = rs.getInt("curso");
+                Curso curso =cursos.buscar(rs.getInt("curso"));
                 Estudiante e = new Estudiante(id2, nom, apellido, correoacu, nombreacu, curso);
                 est.add(e);
             }
@@ -51,6 +59,8 @@ public class Estudiantes implements IBaseDatos<Estudiante> {
             // TODO Auto-generated catch block
             System.out.println("Failed to make update!");
             ex.printStackTrace();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Estudiantes.class.getName()).log(Level.SEVERE, null, ex);
         }
         return est;
     }
@@ -65,12 +75,12 @@ public class Estudiantes implements IBaseDatos<Estudiante> {
 
             // create the mysql insert preparedstatement
             preparedStmt = connection.prepareStatement(query);
-            preparedStmt.setInt(1, a.getId());
+            preparedStmt.setString(1, a.getId());
             preparedStmt.setString(2, a.getNombre().trim());
             preparedStmt.setString(3, a.getApellido().trim());
             preparedStmt.setString(4, a.getCorreoAcudiente().trim());
             preparedStmt.setString(5, a.getNombreAcudiente().trim());
-            preparedStmt.setInt(6, a.getCurso());
+            preparedStmt.setInt(6, a.getCurso().getId());
             // execute the preparedstatement
             preparedStmt.execute();
             System.out.println("You made it, the insertion is ok!");
@@ -90,14 +100,14 @@ public class Estudiantes implements IBaseDatos<Estudiante> {
             try {
                 //Update
                 // create the java mysql update preparedstatement
-                query = "update Estudiante set nombre = ?, apellido=?, curso=?, correoAcudiente=?, nombreAcudiente=? where id = ?";
+                query = "update Estudiante set nombre = ?, apellido=?,correoAcudiente=?, nombreAcudiente=?,curso=? where id = \"?\"";
                 preparedStmt = connection.prepareStatement(query);
                 preparedStmt.setString(1, a.getNombre().trim());
                 preparedStmt.setString(2, a.getApellido().trim());
                 preparedStmt.setString(3, a.getCorreoAcudiente().trim());
                 preparedStmt.setString(4, a.getNombreAcudiente().trim());
-                preparedStmt.setInt(5, a.getCurso());
-                preparedStmt.setInt(6, a.getId());
+                preparedStmt.setInt(5, a.getCurso().getId());
+                preparedStmt.setString(6, a.getId().trim());
                 // execute the java preparedstatement
                 preparedStmt.executeUpdate();
                 r = true;
@@ -115,7 +125,7 @@ public class Estudiantes implements IBaseDatos<Estudiante> {
         boolean hecho = false;
         try {
             //borramos el curso
-            this.query = "delete from Estudiante where id = " + t.getId();
+            this.query = "delete from Estudiante where id = \"" + t.getId()+"\"";
             this.preparedStmt = this.connection.prepareStatement(this.query);
             this.preparedStmt.execute();
             hecho = true;
@@ -127,9 +137,15 @@ public class Estudiantes implements IBaseDatos<Estudiante> {
         return hecho;
     }
 
-    public Estudiante buscar(int id) {
+    public Estudiante buscar(String id) {
         Estudiante e = null;
-        this.query = "select * from Estudiante where id = " + id;
+         Cursos cursos=null;
+        try {
+            cursos= new Cursos();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Estudiantes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.query = "select * from Estudiante where id = \"" + id+"\"";
         try {
             // create the java statement
             Statement st = this.connection.createStatement();
@@ -137,12 +153,12 @@ public class Estudiantes implements IBaseDatos<Estudiante> {
             ResultSet rs = st.executeQuery(this.query);
             // iterate through the java resultset
             while (rs.next()) {
-                int id2 = rs.getInt("id");
+                String id2 = rs.getString("id");
                 String nom = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
                 String correoacu = rs.getString("correoAcudiente");
                 String nombreacu = rs.getString("nombreAcudiente");
-                int curso = rs.getInt("curso");
+                Curso curso =cursos.buscar(rs.getInt("curso"));
                 e = new Estudiante(id2, nom, apellido, correoacu, nombreacu, curso);
             }
             st.close();
@@ -150,12 +166,20 @@ public class Estudiantes implements IBaseDatos<Estudiante> {
             // TODO Auto-generated catch block
             System.out.println("Failed to make update!");
             ex.printStackTrace();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Estudiantes.class.getName()).log(Level.SEVERE, null, ex);
         }
         return e;
     }
 
     public ArrayList<Estudiante> GetEstudiantesCurso(int c) {
         ArrayList<Estudiante> est = new ArrayList();
+         Cursos cursos=null;
+        try {
+            cursos= new Cursos();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Estudiantes.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.query = "select * from Estudiante where curso = " + c;
         try {
             // create the java statement
@@ -164,12 +188,12 @@ public class Estudiantes implements IBaseDatos<Estudiante> {
             ResultSet rs = st.executeQuery(this.query);
             // iterate through the java resultset
             while (rs.next()) {
-                int id2 = rs.getInt("id");
+                String id2 = rs.getString("id");
                 String nom = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
                 String correoacu = rs.getString("correoAcudiente");
                 String nombreacu = rs.getString("nombreAcudiente");
-                int curso = rs.getInt("curso");
+                Curso curso = cursos.buscar(rs.getInt("curso"));
                 Estudiante e = new Estudiante(id2, nom, apellido, correoacu, nombreacu, curso);
                 est.add(e);
             }
@@ -178,11 +202,13 @@ public class Estudiantes implements IBaseDatos<Estudiante> {
             // TODO Auto-generated catch block
             System.out.println("Failed to make update!");
             ex.printStackTrace();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Estudiantes.class.getName()).log(Level.SEVERE, null, ex);
         }
         for (int i = 0; i < est.size(); i++) {
             Estudiante min = est.get(i);
             for (int j = 0; j < est.size(); j++) {
-                if (est.get(j).getId() < min.getId()) {
+                if (est.get(j).getId().compareTo(min.getId()) < 0 ) {
                     est.set(i, est.get(j));
                     est.set(j, min);
                     min = est.get(i);
@@ -194,6 +220,12 @@ public class Estudiantes implements IBaseDatos<Estudiante> {
 
     public ArrayList<Estudiante> GetEstudiantesSinCurso() {
         ArrayList<Estudiante> est = new ArrayList();
+         Cursos cursos=null;
+        try {
+            cursos= new Cursos();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Estudiantes.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.query = "select * from Estudiante where curso = null";
         try {
             // create the java statement
@@ -202,12 +234,12 @@ public class Estudiantes implements IBaseDatos<Estudiante> {
             ResultSet rs = st.executeQuery(this.query);
             // iterate through the java resultset
             while (rs.next()) {
-                int id2 = rs.getInt("id");
+                String id2 = rs.getString("id");
                 String nom = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
                 String correoacu = rs.getString("correoAcudiente");
                 String nombreacu = rs.getString("nombreAcudiente");
-                int curso = rs.getInt("curso");
+                Curso curso = cursos.buscar(rs.getInt("curso"));
                 Estudiante e = new Estudiante(id2, nom, apellido, correoacu, nombreacu, curso);
                 est.add(e);
             }
@@ -216,11 +248,13 @@ public class Estudiantes implements IBaseDatos<Estudiante> {
             // TODO Auto-generated catch block
             System.out.println("Failed to make update!");
             ex.printStackTrace();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Estudiantes.class.getName()).log(Level.SEVERE, null, ex);
         }
         for (int i = 0; i < est.size(); i++) {
             Estudiante min = est.get(i);
             for (int j = 0; j < est.size(); j++) {
-                if (est.get(j).getId() < min.getId()) {
+                if (est.get(j).getId().compareTo(min.getId()) < 0) {
                     est.set(i, est.get(j));
                     est.set(j, min);
                     min = est.get(i);

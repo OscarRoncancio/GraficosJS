@@ -9,9 +9,7 @@ function Popup(id) {
 
     }).done(function (response) {
         console.log(response);
-        
-        
-
+        alert("asdasdasdasdasdasd");
     });
 }
 ;

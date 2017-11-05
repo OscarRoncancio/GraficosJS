@@ -128,6 +128,31 @@ public class Usuarios implements IBaseDatos<Usuario>{
         return e;
     }
 
+     public Usuario buscar2(String usu) {
+        Usuario e=null;
+        this.query = "select * from Usuario where usuario = \""+usu.trim()+"\"";
+        try {
+            // create the java statement
+            Statement st = this.connection.createStatement();
+            // execute the query, and get a java resultset
+            ResultSet rs = st.executeQuery(this.query);
+            // iterate through the java resultset
+            while (rs.next()) {
+                String usuario = rs.getString("usuario");
+                String contrasena = rs.getString("contrasena");
+                String tipoUsuario = rs.getString("tipoUsuario");
+                e = new Usuario(usuario, contrasena, tipoUsuario);
+                break;
+            }
+            st.close();
+        } catch (SQLException ex) {
+            // TODO Auto-generated catch block
+            System.out.println("Failed to make update!");
+            ex.printStackTrace();
+        }
+        return e;
+    }
+    
     public void disconect() throws SQLException {
         this.connection.close();
     }

@@ -13,9 +13,9 @@ public class Curso {
     
     private int id;
     private String nombre;
-    private int profesor;
+    private Profesor profesor;
 
-    public Curso(int id, String nombre, int profesor) {
+    public Curso(int id, String nombre, Profesor profesor) {
         this.id = id;
         this.nombre = nombre;
         this.profesor = profesor;
@@ -37,13 +37,13 @@ public class Curso {
         this.nombre = nombre;
     }
 
-    public int getProfesor() {
+    public Profesor getProfesor() {
         return profesor;
     }
 
-    public void setProfesor(int profesor) {
+    public void setProfesor(Profesor profesor) {
         this.profesor = profesor;
     }
-    
+
     
 }

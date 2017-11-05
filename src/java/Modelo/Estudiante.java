@@ -10,14 +10,14 @@ package Modelo;
  * @author willy
  */
 public class Estudiante {
-    private int id;
+    private String id;
     private String nombre;
     private String apellido;
     private String correoAcudiente;
     private String nombreAcudiente;
-    private int curso;
+    private Curso curso;
 
-    public Estudiante(int id, String nombre, String apellido, String correoAcudiente, String nombreAcudiente, int curso) {
+    public Estudiante(String id, String nombre, String apellido, String correoAcudiente, String nombreAcudiente, Curso curso) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -25,16 +25,12 @@ public class Estudiante {
         this.nombreAcudiente = nombreAcudiente;
         this.curso = curso;
     }
-    
-    
 
-    
-    
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -70,14 +66,13 @@ public class Estudiante {
         this.nombreAcudiente = nombreAcudiente;
     }
 
-    public int getCurso() {
+    public Curso getCurso() {
         return curso;
     }
 
-    public void setCurso(int curso) {
+    public void setCurso(Curso curso) {
         this.curso = curso;
     }
 
-    
     
 }

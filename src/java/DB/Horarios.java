@@ -6,6 +6,7 @@
 package DB;
 
 import Modelo.Horario;
+import Modelo.Materia;
 import Modelo.Nota;
 import java.net.URISyntaxException;
 import java.sql.Connection;
@@ -15,6 +16,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -34,6 +37,12 @@ public class Horarios implements IBaseDatos<Horario> {
     @Override
     public List<Horario> findAll() {
         ArrayList<Horario> mat = new ArrayList();
+        Materias materias=null;
+        try {
+            materias=new Materias();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Horarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.query = "select * from Horario ";
         try {
             // create the java statement
@@ -43,11 +52,11 @@ public class Horarios implements IBaseDatos<Horario> {
             // iterate through the java resultset
             while (rs.next()) {
                 int id2 = rs.getInt("id");
-                String materia = rs.getString("materia");
+                int materia = rs.getInt("materia");
                 int dia = rs.getInt("dia");
                 int hinicio = rs.getInt("hinicio");
                 int hfin = rs.getInt("hfin");
-                Horario e = new Horario(id2, materia, dia, hinicio, hfin);
+                Horario e = new Horario(id2, materias.buscar(materia), dia, hinicio, hfin);
                 mat.add(e);
             }
             st.close();
@@ -69,7 +78,7 @@ public class Horarios implements IBaseDatos<Horario> {
             // create the mysql insert preparedstatement
             preparedStmt = connection.prepareStatement(query);
             preparedStmt.setInt(1, a.getId());
-            preparedStmt.setString(2, a.getMateria());
+            preparedStmt.setInt(2, a.getMateria().getId());
             preparedStmt.setInt(3, a.getDia());
             preparedStmt.setInt(4, a.getHinicio());
             preparedStmt.setInt(5, a.getHfin());
@@ -94,7 +103,7 @@ public class Horarios implements IBaseDatos<Horario> {
                 // create the java mysql update preparedstatement
                 query = "update Nota set materia=?, dia=?,hinicio=?, hfin=? where id = ?";
                 preparedStmt = connection.prepareStatement(query);
-                preparedStmt.setString(1, a.getMateria().trim());
+                preparedStmt.setInt(1, a.getMateria().getId());
                 preparedStmt.setInt(2, a.getDia());
                 preparedStmt.setInt(3, a.getHinicio());
                 preparedStmt.setInt(4, a.getHfin());
@@ -131,6 +140,12 @@ public class Horarios implements IBaseDatos<Horario> {
     public Horario buscar(int id) {
         Horario e = null;
         this.query = "select * from Horario where id = " + id;
+         Materias materias=null;
+        try {
+            materias=new Materias();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Horarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
         try {
             // create the java statement
             Statement st = this.connection.createStatement();
@@ -139,7 +154,7 @@ public class Horarios implements IBaseDatos<Horario> {
             // iterate through the java resultset
             while (rs.next()) {
                 int id2 = rs.getInt("id");
-                String materia = rs.getString("materia");
+                Materia materia = materias.buscar(rs.getInt("materia"));
                 int dia = rs.getInt("dia");
                 int hinicio = rs.getInt("hinicio");
                 int hfin = rs.getInt("hfin");

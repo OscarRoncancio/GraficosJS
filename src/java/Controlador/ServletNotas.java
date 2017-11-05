@@ -72,32 +72,32 @@ public class ServletNotas extends HttpServlet {
             Logger.getLogger(ServletNotas.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        int id = 0, estudiante = 0, valor = 0, periodo = 0;
-        String materia = "", observacion = "";
+        int id = 0, valor = 0, periodo = 0,materia = 0;
+        String  observacion = "",estudiante = "";
         int hacer = Integer.parseInt(request.getParameter("hidden").trim());
         if (hacer == 1) { // ingresar nota
             // Obtengo los datos de la peticion
             try {
-                materia = request.getParameter("materia").trim();
+                materia = Integer.parseInt(request.getParameter("materia").trim());
                 id = Integer.parseInt(request.getParameter("id").trim());
                 observacion = request.getParameter("observacion").trim();
-                estudiante = Integer.parseInt(request.getParameter("estudiante").trim());
+                estudiante = request.getParameter("estudiante").trim();
                 valor = Integer.parseInt(request.getParameter("valor").trim());
                 periodo = Integer.parseInt(request.getParameter("periodo").trim());
             } catch (Exception e) {
                 id = 0;
-                estudiante = 0;
+                estudiante = "";
                 valor = 0;
                 periodo = 0;
-                materia = "";
+                materia = 0;
                 observacion = "";
             }
 
-            if (id != 0 && estudiante != 0 && valor != 0 && periodo != 0 && materia.length() != 0 && observacion.length() != 0) {
+            if (id != 0 && estudiante.length() != 0 && valor != 0 && periodo != 0 && materia != 0 && observacion.length() != 0) {
                 Estudiante e = est.buscar(estudiante);
-                Materia m = null; //mat.buscar(materia);
+                Materia m = mat.buscar(materia);
                 if (e != null && m != null) {
-                    Nota a = new Nota(id, estudiante, materia, valor, periodo, observacion);
+                    Nota a = new Nota(id, m.getNombre(), valor, periodo, observacion,estudiante);
                     boolean r = this.notas.insert(a);
                     if (r) {
                         response.setContentType("application/json");

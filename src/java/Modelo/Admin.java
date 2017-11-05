@@ -11,23 +11,23 @@ package Modelo;
  */
 public class Admin {
     
-    private int cedula;
+    private String cedula;
     private String nombre;
     private String apellido;
-    private String usuario;
+    private Usuario usuario;
 
-    public Admin(int cedula, String nombre, String apellido, String usuario) {
+    public Admin(String cedula, String nombre, String apellido, Usuario usuario) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
         this.usuario = usuario;
     }
 
-    public int getCedula() {
+    public String getCedula() {
         return cedula;
     }
 
-    public void setCedula(int cedula) {
+    public void setCedula(String cedula) {
         this.cedula = cedula;
     }
 
@@ -47,13 +47,11 @@ public class Admin {
         this.apellido = apellido;
     }
 
-    public String getUsuario() {
+    public Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(String usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    
-    
 }
