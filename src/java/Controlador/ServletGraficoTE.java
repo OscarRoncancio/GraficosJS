@@ -6,78 +6,69 @@
 package Controlador;
 
 import DB.ConeccionGrafico;
+import com.google.gson.Gson;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartUtilities;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.general.DefaultPieDataset;
 
 /**
  *
  * @author Oscar
  */
-@WebServlet(name = "ServletGrafico", urlPatterns = {"/ServletGrafico"})
+@WebServlet(name = "ServletGraficoTE", urlPatterns = {"/ServletGraficoTE"})
 public class ServletGraficoTE extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        response.setContentType("image/PNG");
-        OutputStream out = response.getOutputStream();
+        ArrayList<Integer> n = new ArrayList();
+        ConeccionGrafico conec = new ConeccionGrafico();
+        Connection con = conec.getConexion();
+
+        ResultSet rs = null;
+        PreparedStatement ps = null;
 
         try {
-            ConeccionGrafico conec = new ConeccionGrafico();
-            Connection con = conec.getConexion();
 
-            ResultSet rs = null;
-            PreparedStatement ps = null;
-
-            try {
-
-                ps = con.prepareStatement("select Count(valor),\n"
-                        + "case \n"
-                        + "when valor = 50 then 'Estudiantes con 50'\n"
-                        + "when valor = 40 then 'Estudiantes con 40'\n"
-                        + "when valor = 30 then 'Estudiantes con 30'\n"
-                        + "when valor = 20 then 'Estudiantes con 20'\n"
-                        + "when valor = 10 then 'Estudiantes con 10'\n"
-                        + "else 'ninguno'\n"
-                        + "END as notas\n"
-                        + "from Nota\n"
-                        + "group by notas");
-                rs = ps.executeQuery();
-                DefaultPieDataset data = new DefaultPieDataset();
-                while (rs.next()) {
-                    data.setValue(rs.getString(2) + ": " + String.valueOf(rs.getInt(1)), rs.getInt(1));
-                }
-
-                JFreeChart cha = ChartFactory.createPieChart3D("Notas de los estudiantes en el jardin", data, true, true, true);
-                int ancho = 450, alto = 300;
+            ps = con.prepareStatement("select Count(valor),\n"
+                    + "case \n"
+                    + "when valor = 50 then 'Estudiantes con 50'\n"
+                    + "when valor = 40 then 'Estudiantes con 40'\n"
+                    + "when valor = 30 then 'Estudiantes con 30'\n"
+                    + "when valor = 20 then 'Estudiantes con 20'\n"
+                    + "when valor = 10 then 'Estudiantes con 10'\n"
+                    + "else 'ninguno'\n"
+                    + "END as notas\n"
+                    + "from Nota\n"
+                    + "group by notas");
+            rs = ps.executeQuery();
+            
+            while (rs.next()) {
                 
-                ChartUtilities.writeChartAsPNG(out, cha, ancho, alto);
-                ps.close();
-                rs.close();
-                conec.desconectar();
-
-            } catch (Exception ex) {
+                n.add(rs.getInt(1));
 
             }
+            
+            int hacer = Integer.parseInt(request.getParameter("hidden").trim());
+            if (hacer == 1) {
+                String json = new Gson().toJson(n);
+                response.setContentType("application/json");
+                response.getWriter().write(json);
+            }
+            ps.close();
+            rs.close();
+            conec.desconectar();
 
-        } finally {
-            out.close();
+        } catch (Exception ex) {
         }
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -91,6 +82,7 @@ public class ServletGraficoTE extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
     }
 
     /**

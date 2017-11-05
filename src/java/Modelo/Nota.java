@@ -26,6 +26,12 @@ public class Nota {
         this.periodo = periodo;
         this.observacion = observacion;
     }
+    public Nota(String materia, int valor) {
+
+        this.materia = materia;
+        this.valor = valor;
+        
+    }
 
     public int getId() {
         return id;

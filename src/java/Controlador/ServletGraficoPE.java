@@ -6,74 +6,63 @@
 package Controlador;
 
 import DB.ConeccionGrafico;
+import Modelo.Nota;
+import com.google.gson.Gson;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartUtilities;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.DefaultPieDataset;
+
 
 /**
  *
  * @author Oscar
  */
-@WebServlet(name = "ServletGrafico", urlPatterns = {"/ServletGrafico"})
+@WebServlet(name = "ServletGraficoPE", urlPatterns = {"/ServletGraficoPE"})
 public class ServletGraficoPE extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        response.setContentType("image/PNG");
-        OutputStream out = response.getOutputStream();
-        
-        
+
+        ArrayList<Nota> notas = new ArrayList();
+        ConeccionGrafico conec = new ConeccionGrafico();
+        Connection con = conec.getConexion();
+        Nota n = null;
+        ResultSet rs = null;
+        PreparedStatement ps = null;
+
         try {
-            ConeccionGrafico conec = new ConeccionGrafico();
-            Connection con = conec.getConexion();
-            
-            ResultSet rs = null;
-            PreparedStatement ps = null;
-            
-            
-            try{    
-                
-                ps = con.prepareStatement("select Estudiante.id,Estudiante.nombre,Nota.materia,Nota.valor from Nota inner join Estudiante where Estudiante.id = "+ 2 +" &&  Estudiante.id = Nota.id_est");
-                rs = ps.executeQuery();
-                DefaultCategoryDataset data = new DefaultCategoryDataset();
-                while(rs.next()){
-                    
-                    data.setValue(rs.getInt(4), rs.getString(3), rs.getString(3));
-                
-                
-                }
-                    JFreeChart cha = ChartFactory.createBarChart3D("Notas del estudiante segun materia", "Materia", "Nota en la asignatura", data, PlotOrientation.VERTICAL, true, true, true);
-                    int ancho =450,alto=300;
-                    
-                    ChartUtilities.writeChartAsPNG(out, cha,ancho,alto);
-                    ps.close();
-                    rs.close();
-                    conec.desconectar();
-                
-                
-                
-            }catch(Exception ex){
-                
+
+            ps = con.prepareStatement("select Estudiante.id,Estudiante.nombre,Nota.materia,Nota.valor from Nota inner join Estudiante where Estudiante.id = 2  &&  Estudiante.id = Nota.id_est");
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                n = new Nota(rs.getString(3), rs.getInt(4));
+                notas.add(n);
+
             }
 
-        } finally {
-            out.close();
+            int hacer = Integer.parseInt(request.getParameter("hidden").trim());
+            if (hacer == 1) {
+                notas = (ArrayList) notas;
+                String json = new Gson().toJson(notas);
+                response.setContentType("application/json");
+                response.getWriter().write(json);
+            }
+            ps.close();
+            rs.close();
+            conec.desconectar();
+
+        } catch (Exception ex) {
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -25,6 +25,8 @@ public class Estudiante {
         this.nombreAcudiente = nombreAcudiente;
         this.curso = curso;
     }
+    
+    
 
     
     

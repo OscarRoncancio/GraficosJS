@@ -34,6 +34,7 @@
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <script type='text/javascript' src="js/Pop-Up.js" ></script>
         <script>
             window.onload = function () {
                 var parametros = {
@@ -76,10 +77,10 @@
                                 '<td style="width:100px">' + inventario[i].nombreAcudiente + '</td>' +
                                 '<td style="width:100px">' + inventario[i].curso + '</td>' +
                                 '<td style="width:100px"> <input type = "number" id = "nota-' + inventario[i].id + '" /></td>' +
-                                '<td style="width:100px"> <input type="button" value="Pop up en Zoom In" class="button" data-type="zoomin"></td>' +
-                                '<td style="width:100px"> <input type="button" id = "bt-' + inventario[i].id + '" value="Pdf"></td>' +
-                                '<td style="width:100px"> <input type="button" id = "bt-' + inventario[i].id + '" value="Editar"></td>' +
-                                '<td style="width:100px"> <input type="button" id = "bt-' + inventario[i].id + '" value="Borrar"></td>' +
+                                '<td style="width:100px"> <button id = "bt-' + inventario[i].id + '"onclick="Popup(' + inventario[i].id + ')" class="button" data-type="zoomin">Graf</button></td>' +
+                                '<td style="width:100px"> <button id = "bt-' + inventario[i].id + '">PDF</button></td>' +
+                                '<td style="width:100px"> <button id = "bt-' + inventario[i].id + '">Editar</button></td>' +
+                                '<td style="width:100px"> <button id = "bt-' + inventario[i].id + '">Borrar</button></td>' +
                                 '</tr>'
                                 );
                     }
@@ -214,7 +215,7 @@
                 <div class="section col-md-8 col-xs-12 no_left no_right">
                     <div class="row">
 
-                        
+
 
                         <section class="content service-content">
                             <div style="text-align: center" id="informaciontablas">  
@@ -235,7 +236,7 @@
                         </section>
 
                     </div>
-                    <input type="button" value="Pop up en Zoom Out" class="button" data-type="zoomout">
+                    <input type="button" value="Pop up en Zoom Out" class="button" onclick="Popup(2)" data-type="zoomout">
                     <div class="overlay-container">
                         <div class="window-container zoomout">
                             <img src="ServletGraficoPE" />
@@ -256,20 +257,16 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="Profesores.htm">
+                                    <a href="Profesores_Listar.htm">
                                         <span>Profesores</span>
                                     </a>
                                 </li>
                                 <li class="active">
-                                    <a href="Estudiantes.htm">
+                                    <a href="Estudiantes_Listar.htm">
                                         <span>Estudiantes</span>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="Horario.htm">
-                                        <span>Horario</span>
-                                    </a>
-                                </li>
+
                                 <li>
                                     <a href="Datos_Personales.htm">
                                         <span>Datos Personales</span>
