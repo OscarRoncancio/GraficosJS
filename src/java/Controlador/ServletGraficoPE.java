@@ -5,7 +5,7 @@
  */
 package Controlador;
 
-import DB.ConeccionGrafico;
+import DB.Coneccion;
 import DB.Notas;
 import Modelo.Nota;
 import com.google.gson.Gson;

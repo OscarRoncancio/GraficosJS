@@ -25,6 +25,9 @@ public class Estudiante {
         this.nombreAcudiente = nombreAcudiente;
         this.curso = curso;
     }
+    public Estudiante(String correoAcudiente){
+        this.correoAcudiente = correoAcudiente;
+    }
 
     public String getId() {
         return id;

@@ -5,7 +5,7 @@
  */
 package Controlador;
 
-import DB.ConeccionGrafico;
+import DB.Coneccion;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.sql.Connection;
@@ -29,7 +29,7 @@ public class ServletGraficoTE extends HttpServlet {
             throws ServletException, IOException {
 
         ArrayList<Integer> n = new ArrayList();
-        ConeccionGrafico conec = new ConeccionGrafico();
+        Coneccion conec = new Coneccion();
         Connection con = conec.getConexion();
 
         ResultSet rs = null;

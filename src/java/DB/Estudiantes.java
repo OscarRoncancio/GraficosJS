@@ -171,6 +171,29 @@ public class Estudiantes implements IBaseDatos<Estudiante> {
         }
         return e;
     }
+    public ArrayList<Estudiante> buscarIdEstudiante(String id)  {
+        ArrayList<Estudiante> est = new ArrayList();
+
+        this.query = "select correoAcudiente from Estudiante where id = '" + id+"'";
+        try {
+            // create the java statement
+            Statement st = this.connection.createStatement();
+            // execute the query, and get a java resultset
+            ResultSet rs = st.executeQuery(this.query);
+            // iterate through the java resultset
+            while (rs.next()) {
+                String correoacu = rs.getString("correoAcudiente");
+                Estudiante e = new Estudiante(correoacu);
+                est.add(e);
+            }
+            st.close();
+        } catch (SQLException ex) {
+            // TODO Auto-generated catch block
+            System.out.println("Failed to make update!");
+            ex.printStackTrace();
+        }
+        return est;
+    }
 
     public ArrayList<Estudiante> GetEstudiantesCurso(int c) {
         ArrayList<Estudiante> est = new ArrayList();

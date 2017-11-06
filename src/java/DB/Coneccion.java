@@ -12,7 +12,7 @@ import java.sql.DriverManager;
  *
  * @author Oscar
  */
-public class ConeccionGrafico {
+public class Coneccion {
     
     static String bd = "bd";
     static String login = "root";
@@ -22,7 +22,7 @@ public class ConeccionGrafico {
     
     Connection con = null;
     
-    public ConeccionGrafico(){
+    public Coneccion(){
         try{
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(url, login,pass);
