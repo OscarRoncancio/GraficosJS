@@ -1,8 +1,8 @@
 
 function GPE(id) {
+    limpiar();
     var ctx = document.getElementById("popChart1");
     var myBarChart;
-
     var parametros = {
         "hidden": "1",
         "id": id
@@ -25,7 +25,6 @@ function GPE(id) {
         }
         arreglo3.push(arreglo2);
         arreglo1.push(arreglo);
-
         myBarChart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -55,17 +54,12 @@ function GPE(id) {
             }
         });
     });
-    
 }
 ;
-
-
 function GTE() {
-    
+    limpiar();
     var ctx = document.getElementById("popChart1");
-
     var myBarChart;
-
     var parametros = {
         "hidden": "1"
     };
@@ -81,7 +75,6 @@ function GTE() {
         var inventario = response;
         var arreglo = [];
         arreglo.push([inventario[0], inventario[1], inventario[2], inventario[3], inventario[4]]);
-
         myBarChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
@@ -108,3 +101,13 @@ function GTE() {
     );
 }
 ;
+function limpiar() {
+    $("#grafica").empty();
+    $("#grafica").append(
+            '<div  >' +
+            '<h3>Versión en Zoom in</h3>' +
+            '<canvas id="popChart1" width="700" height="300"></canvas><br/>' +
+            '<br/>' +
+            
+            '</div>');
+}

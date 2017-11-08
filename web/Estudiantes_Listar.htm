@@ -33,66 +33,11 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
         <script>!window.jQuery && document.write(unescape('%3Cscript src="jquery-1.7.1.min.js"%3E%3C/script%3E'))</script>
-        
+
         <script type='text/javascript' src="js/2.js" ></script>
         <script type='text/javascript' src="js/jquery-2.1.3.js"></script>
         <script type='text/javascript' src="js/demo.js"></script>
-        <script>
-            window.onload = function () {
-                var parametros = {
-                    "hidden": "3"
-                };
-                $.ajax({
-                    data: parametros,
-                    url: "ServletEstudiantes",
-                    type: "GET"
-
-                }).done(function (response) {
-                    console.log(response);
-                    var inventario = response;
-                    $("#informaciontablas").show();
-                    $("#tabla1").show();
-                    $("#tabla1").empty();
-                    $("#tabla1").append(
-                            '<tr>' +
-                            '<th style="width:100px">ID</th>' +
-                            '<th style="width:100px">Nombre</th>' +
-                            '<th style="width:100px">Apellido</th>' +
-                            '<th style="width:100px">Correo Acudiente</th>' +
-                            '<th style="width:100px">Nombre Acudiente</th>' +
-                            '<th style="width:100px">Curso</th>' +
-                            '<th style="width:100px">Nota</th>' +
-                            '<th style="width:100px">Gráfico</th>' +
-                            '<th style="width:100px">PDF</th>' +
-                            '<th style="width:100px">Editar</th>' +
-                            '<th style="width:100px">Borrar</th>' +
-                            '</tr>'
-                            );
-
-                    for (var i in inventario) {
-                        $("#tabla1").append(
-                                '<tr>' +
-                                '<td style="width:100px">' + inventario[i].id + '</td>' +
-                                '<td style="width:100px">' + inventario[i].nombre + '</td>' +
-                                '<td style="width:100px">' + inventario[i].apellido + '</td>' +
-                                '<td style="width:100px">' + inventario[i].correoAcudiente + '</td>' +
-                                '<td style="width:100px">' + inventario[i].nombreAcudiente + '</td>' +
-                                '<td style="width:100px">' + inventario[i].curso + '</td>' +
-                                '<td style="width:100px"> <input type = "number" id = "nota-' + inventario[i].id + '" /></td>' +
-                                '<td style="width:100px">' +
-                                '<button class="button" id = "bt-' + inventario[i].id + '" onclick="GPE(' + inventario[i].id + ')" data-type="zoomin">graf</button>' +
-                                '</td>' +
-                                '<td style="width:100px"> <button id = "bt-' + inventario[i].id + '">PDF</button></td>' +
-                                '<td style="width:100px"> <button id = "bt-' + inventario[i].id + '">Editar</button></td>' +
-                                '<td style="width:100px"> <button id = "bt-' + inventario[i].id + '">Borrar</button></td>' +
-                                '</tr>'
-                                );
-                    }
-
-                });
-            };
-
-        </script>
+        <script type='text/javascript' src="js/estudiantes.js"></script>
 
     </head>
 
@@ -230,17 +175,13 @@
                                 </table> 
                             </div>
                             <button style="width:100px" class="button" onclick="GTE()" data-type="zoomin"> graf</button>
-                        </section>
+                            <div id="grafica">
 
-                    </div>
-                    <button style="width:100px" class="button" data-type="zoomin"> graf</button>
-                    <div class="overlay-container">
-                        <div class="window-container zoomin">
-                            <h3>Versión en Zoom in</h3> 
-                            <canvas id="popChart1" width="700" height="300"></canvas><br/>
-                            <br/>
-                            <span class="close">Cerrar</span>
-                        </div>
+                                <h3>Versión en Zoom in</h3> 
+                                <canvas id="popChart1" width="700" height="300"></canvas><br/>
+                                <br/>
+                            </div>
+                        </section>
                     </div>
 
 
